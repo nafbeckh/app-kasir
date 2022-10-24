@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meja;
+use App\Models\Produk;
 use App\Models\Setting;
-use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class SupplierController extends Controller
+class MejaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,10 +23,13 @@ class SupplierController extends Controller
         $user = Auth::user();
         $toko = Setting::first();
         if ($request->ajax()) {
-            return DataTables::of(Supplier::query())->toJson();
+            return DataTables::of(Meja::query())->toJson();
         }
-
-        return view('supplier.data', compact(['user', 'toko']))->with('title', 'Data Supplier');
+        if ($user->hasRole('admin')) {
+            return view('meja.data', compact(['user', 'toko']))->with('title', 'Data Meja');
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -49,16 +53,17 @@ class SupplierController extends Controller
     {
         //
         $this->validate($request, [
-            'nama'    => 'required|max:50|min:2|unique:suppliers,nama',
-            'alamat'  => 'required',
-            'telp'    => 'required',
+            'nama'    => 'required|max:50|min:2|unique:mejas,nama',
+            'status'    => 'required',
         ]);
-        $supplier = Supplier::create([
+        $meja = Meja::latest()->first() ?? new Meja();
+        $kode = 'Meja' . tambah_nol_didepan((int)$meja->id + 1, 6);
+        $meja = Meja::create([
+            'kode_meja'     => $kode,
             'nama'            => $request->nama,
-            'alamat'          => $request->alamat,
-            'telp'            => $request->telp,
+            'status'          => $request->status,
         ]);
-        if ($supplier) {
+        if ($meja) {
             return response()->json(['status' => true, 'message' => 'Success Insert Data']);
         } else {
             return response()->json(['status' => false, 'message' => 'Failed Insert Data']);
@@ -68,10 +73,10 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\Meja  $meja
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(Meja $meja)
     {
         //
         abort(404);
@@ -80,15 +85,15 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\Meja  $meja
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, Supplier $supplier)
+    public function edit(Request $request, Meja $meja)
     {
         //
         if ($request->ajax()) {
-            $supplier = Supplier::find($supplier->id);
-            return response()->json(['status' => true, 'message' => '', 'data' => $supplier]);
+            $meja = Meja::find($meja->id);
+            return response()->json(['status' => true, 'message' => '', 'data' => $meja]);
         } else {
             abort(404);
         }
@@ -98,25 +103,23 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\Meja  $meja
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, Meja $meja)
     {
         //
         $this->validate($request, [
-            'nama'      => 'required|max:50|min:2|unique:suppliers,nama,' . $supplier->id,
-            'alamat'  => 'required',
-            'telp'    => 'required',
+            'nama'      => 'required|max:50|min:2|unique:Mejas,nama,' . $meja->id,
+            'status'  => 'required|max:50',
         ]);
-        $supplier = Supplier::findOrFail($supplier->id);
-        $supplier->update([
+        $meja = Meja::findOrFail($meja->id);
+        $meja->update([
             'nama'            => $request->nama,
-            'alamat'          => $request->alamat,
-            'telp'            => $request->telp,
+            'status'          => $request->status,
         ]);
 
-        if ($supplier) {
+        if ($meja) {
             return response()->json(['status' => true, 'message' => 'Success Insert Data']);
         } else {
             return response()->json(['status' => false, 'message' => 'Failed Insert Data']);
@@ -126,16 +129,16 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\Meja  $meja
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(Meja $meja)
     {
         //
-        $supplier = Supplier::findOrFail($supplier->id);
-        $supplier->delete();
+        $meja = Meja::findOrFail($meja->id);
+        $meja->delete();
 
-        if ($supplier) {
+        if ($meja) {
             return response()->json(['status' => true, 'message' => 'Success Delete Data']);
         } else {
             return response()->json(['status' => false, 'message' => 'Failed Delete Data']);
@@ -146,8 +149,8 @@ class SupplierController extends Controller
     {
         if ($request->id) {
             foreach ($request->id as $id) {
-                $supplier = Supplier::findOrFail($id);
-                $supplier->delete();
+                $meja = Meja::findOrFail($id);
+                $meja->delete();
             }
             return response()->json(['status' => true, 'message' => 'Success Delete Data']);
         } else {

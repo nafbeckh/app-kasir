@@ -4,14 +4,11 @@ use App\Http\Controllers\{
     HomeController,
     KategoriController,
     LaporanController,
-    MemberController,
-    PembelianController,
-    PembelianDetailController,
+    MejaController,
     PengeluaranController,
     PenjualanController,
     ProdukController,
     SettingController,
-    SupplierController,
     UserController,
 };
 use Illuminate\Support\Facades\Auth;
@@ -53,17 +50,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('produk/destroyBatch', [ProdukController::class, 'destroyBatch'])->name('produk.destroy.batch');
         Route::resource('produk', ProdukController::class)->except('create', 'show');
 
-        Route::post('member/destroyBatch', [MemberController::class, 'destroyBatch'])->name('member.destroy.batch');
-        Route::resource('member', MemberController::class)->except('create', 'show');
-
-        Route::post('supplier/destroyBatch', [SupplierController::class, 'destroyBatch'])->name('supplier.destroy.batch');
-        Route::resource('supplier', SupplierController::class)->except('create', 'show');
+        Route::post('meja/destroyBatch', [MejaController::class, 'destroyBatch'])->name('meja.destroy.batch');
+        Route::resource('meja', MejaController::class)->except('create', 'show');
 
         Route::post('pengeluaran/destroyBatch', [PengeluaranController::class, 'destroyBatch'])->name('pengeluaran.destroy.batch');
         Route::resource('pengeluaran', PengeluaranController::class)->except('create', 'show');
-
-        Route::post('pembelian/destroyBatch', [PembelianController::class, 'destroyBatch'])->name('pembelian.destroy.batch');
-        Route::resource('pembelian', PembelianController::class)->except('update', 'show');
 
         Route::get('penjualan/{penjualan}/print', [PenjualanController::class, 'print'])->name('penjualan.print');
         Route::post('penjualan/destroyBatch', [PenjualanController::class, 'destroyBatch'])->name('penjualan.destroy.batch');
@@ -74,7 +65,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/laporan/pendapatan', [LaporanController::class, 'index'])->name('laporan.pendapatan');
         Route::get('/laporan/kasir', [LaporanController::class, 'kasir'])->name('laporan.kasir');
-        Route::get('/laporan/supplier', [LaporanController::class, 'supplier'])->name('laporan.supplier');
         Route::get('/laporan/perbulan', [LaporanController::class, 'bulan'])->name('laporan.perbulan');
     });
     // Route::group(['middleware' => ['role:kasir']], function () {
@@ -88,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/profile', [SettingController::class, 'profileUpdate'])->name('setting.profileUpdate');
 
         Route::resource('produk', ProdukController::class)->only('index');
-        Route::resource('member', MemberController::class)->only('store', 'index');
+        Route::resource('meja', MejaController::class)->only('store', 'index');
 
         Route::get('/laporan/penjualanKasir', [LaporanController::class, 'penjualanKasir'])->name('laporan.penjualan.kasir');
         Route::get('/penjualan/printLast', [PenjualanController::class, 'penjualanPrintLast'])->name('penjualan.print.last');

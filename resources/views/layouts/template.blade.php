@@ -114,22 +114,14 @@
                                 </p>
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="{{ route('member.index') }}" class="nav-link {{ $title == 'Data Member' ? 'active' : '' }}">
+                        <li class="nav-item">
+                            <a href="{{ route('meja.index') }}" class="nav-link {{ $title == 'Data Meja' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-address-card"></i>
                                 <p>
-                                    Member
+                                    Meja
                                 </p>
                             </a>
-                        </li> -->
-                        <!-- <li class="nav-item">
-                            <a href="{{ route('supplier.index') }}" class="nav-link {{ $title == 'Data Supplier' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-truck"></i>
-                                <p>
-                                    Supplier
-                                </p>
-                            </a>
-                        </li> -->
+                        </li>
                         <li class="nav-header">TRANSAKSI</li>
                         <li class="nav-item">
                             <a href="{{ route('pengeluaran.index') }}" class="nav-link {{ $title == 'Data Pengeluaran' ? 'active' : '' }}">
@@ -139,7 +131,7 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item {{ $title == 'Data Pembelian' || $title == 'Tambah Pembelian' ? 'menu-open' : '' }}">
+                        {{-- <li class="nav-item {{ $title == 'Data Pembelian' || $title == 'Tambah Pembelian' ? 'menu-open' : '' }}">
                             <a href="{{ route('pembelian.index') }}" class="nav-link {{ $title == 'Data Pembelian' || $title == 'Tambah Pembelian' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-download"></i>
                                 <p>
@@ -161,7 +153,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                         <li class="nav-item {{ $title == 'Data Penjualan' || $title == 'Tambah Penjualan' ? 'menu-open' : '' }}">
                             <a href="{{ route('penjualan.index') }}" class="nav-link {{ $title == 'Data Penjualan' || $title == 'Tambah Penjualan' ? 'active' : '' }}">
@@ -198,7 +190,21 @@
                         </li>
 
                         <li class="nav-header">LAPORAN</li>
-                        <li class="nav-item {{ $title == 'Laporan Pendapatan' || $title == 'Laporan Kasir' || $title == 'Laporan Supplier' ? 'menu-open' : '' }}">
+                        <li class="nav-item">
+                            <a href="{{ route('laporan.pendapatan') }}" class="nav-link {{ $title == 'Laporan Pendapatan' ? 'active' : '' }}">
+                                <i class="fas fa-file-pdf nav-icon"></i>
+                                <p>Laporan Pendapatan</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('laporan.pendapatan') }}" class="nav-link {{ $title == 'Laporan Menu Terlaris' ? 'active' : '' }}">
+                                <i class="fas fa-file-pdf nav-icon"></i>
+                                <p>Laporan Menu Terlaris</p>
+                            </a>
+                        </li>
+
+                        {{-- <li class="nav-item {{ $title == 'Laporan Pendapatan' || $title == 'Laporan Kasir' || $title == 'Laporan Supplier' ? 'menu-open' : '' }}">
                             <a href="{{ route('penjualan.index') }}" class="nav-link {{ $title == 'Laporan Pendapatan' || $title == 'Laporan Kasir' || $title == 'Laporan Supplier' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-file-pdf"></i>
                                 <p>
@@ -226,7 +232,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
+
                         <li class="nav-header">SYSTEM</li>
 
                         <li class="nav-item">

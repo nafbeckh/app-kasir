@@ -15,7 +15,7 @@ class CreatePenjualansTable extends Migration
     {
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('member_id');
+            $table->unsignedBigInteger('meja_id');
             $table->unsignedBigInteger('user_id');
             $table->string('kode_penj')->unique();
             $table->integer('total_item');
@@ -23,7 +23,7 @@ class CreatePenjualansTable extends Migration
             $table->integer('diskon');
             $table->integer('bayar');
             $table->integer('diterima');
-            $table->foreign('member_id')->references('id')->on('members')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('meja_id')->references('id')->on('mejas')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

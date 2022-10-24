@@ -56,8 +56,7 @@
                                 <th class="text-center checkbox-column dt-no-sorting"><input type="checkbox" class="text-center new-control-input chk-parent select-customers-info" data-toggle="tooltip" title="Select All Data"></th>
                                 <th>Kode</th>
                                 <th>Nama</th>
-                                <th>Telp</th>
-                                <th>Alamat</th>
+                                <th>Status</th>
                                 <th class="text-center dt-no-sorting">Aksi</th>
                             </tr>
                         </thead>
@@ -96,17 +95,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="telp" class="col-sm-3 col-form-label"><i class="fas fa-phone mr-1" data-toggle="tooltip" title="No Telp"></i>Telp :</label>
+                            <label for="status" class="col-sm-3 col-form-label"><i class="fas fa-map-marker mr-1" data-toggle="tooltip" title="Status"></i>Status</label>
                             <div class="col-sm-9">
-                                <input type="number" name="telp" class="form-control" id="telp" placeholder="Masukkan No Telp" required>
-                                <span id="err_telp" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="alamat" class="col-sm-3 col-form-label"><i class="fas fa-map-marker mr-1" data-toggle="tooltip" title="Alamat"></i>Alamat</label>
-                            <div class="col-sm-9">
-                                <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan Alamat" required></textarea>
-                                <span id="err_alamat" class="error invalid-feedback" style="display: hide;"></span>
+                                <textarea name="status" id="status" class="form-control" placeholder="Masukkan Status" required></textarea>
+                                <span id="err_status" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
                     </div>
@@ -144,17 +136,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="edit_telp" class="col-sm-3 col-form-label"><i class="fas fa-phone mr-1" data-toggle="tooltip" title="No Telp"></i>Telp :</label>
+                            <label for="edit_status" class="col-sm-3 col-form-label"><i class="fas fa-map-marker mr-1" data-toggle="tooltip" title="Status"></i>Status</label>
                             <div class="col-sm-9">
-                                <input type="number" name="telp" class="form-control" id="edit_telp" placeholder="Masukkan No Telp" required>
-                                <span id="err_edit_telp" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="edit_alamat" class="col-sm-3 col-form-label"><i class="fas fa-map-marker mr-1" data-toggle="tooltip" title="Alamat"></i>Alamat</label>
-                            <div class="col-sm-9">
-                                <textarea name="alamat" id="edit_alamat" class="form-control" placeholder="Masukkan Alamat"></textarea>
-                                <span id="err_edit_alamat" class="error invalid-feedback" style="display: hide;"></span>
+                                <textarea name="status" id="edit_status" class="form-control" placeholder="Masukkan Status"></textarea>
+                                <span id="err_edit_status" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
                     </div>
@@ -207,7 +192,7 @@
             processing: true,
             serverSide: true,
             rowId: 'id',
-            ajax: "{{ route('member.index') }}",
+            ajax: "{{ route('meja.index') }}",
             lengthChange: false,
             'stateSave': false,
             "oLanguage": {
@@ -260,7 +245,7 @@
                     }
                 },
                 {
-                    data: 'kode_member',
+                    data: 'kode_meja',
                     title: "Kode",
                     render: function(data, type, row, meta) {
                         return `<span class="badge badge-success">${data}</span>`
@@ -271,12 +256,8 @@
                     title: "Nama"
                 },
                 {
-                    data: 'telp',
-                    title: "Telp"
-                },
-                {
-                    data: 'alamat',
-                    title: 'Alamat'
+                    data: 'status',
+                    title: 'Status'
                 },
                 {
                     title: 'Action',
@@ -386,7 +367,7 @@
 
         $('body').on('click', '#btnDelete', function() {
             id = $(this).data("id");
-            let url = "{{ route('member.destroy', ':id') }}";
+            let url = "{{ route('meja.destroy', ':id') }}";
             url = url.replace(':id', id);
             Swal.fire({
                 title: 'Are you sure?',
@@ -445,7 +426,7 @@
             $('#formEdit input.is-invalid').each(function(i) {
                 $(this).removeClass('is-invalid');
             });
-            let url = "{{ route('member.edit', ':id') }}";
+            let url = "{{ route('meja.edit', ':id') }}";
             url = url.replace(':id', id);
             $.ajax({
                 url: url,
@@ -453,8 +434,7 @@
                 success: function(result) {
                     $('#edit_reset').val(result.data.id);
                     $('#edit_nama').val(result.data.nama);
-                    $('#edit_alamat').val(result.data.alamat);
-                    $('#edit_telp').val(result.data.telp);
+                    $('#edit_status').val(result.data.status);
                 },
                 error: function(xhr, status, error) {
                     er = xhr.responseJSON.errors
@@ -476,7 +456,7 @@
                 $(this).removeClass('is-invalid');
             });
             id = $(this).data('id');
-            let url = "{{ route('member.edit', ':id') }}";
+            let url = "{{ route('meja.edit', ':id') }}";
             url = url.replace(':id', id);
             $.ajax({
                 url: url,
@@ -484,8 +464,7 @@
                 success: function(result) {
                     $('#edit_reset').val(result.data.id);
                     $('#edit_nama').val(result.data.nama);
-                    $('#edit_alamat').val(result.data.alamat);
-                    $('#edit_telp').val(result.data.telp);
+                    $('#edit_status').val(result.data.status);
                 },
                 error: function(xhr, status, error) {
                     er = xhr.responseJSON.errors
@@ -522,7 +501,7 @@
                     }
                 });
                 var formData1 = new FormData($(form)[0]);
-                let url = "{{ route('member.update', ':id') }}";
+                let url = "{{ route('meja.update', ':id') }}";
                 url = url.replace(':id', id);
                 $.ajax({
                     type: 'POST',
@@ -609,7 +588,7 @@
                 });
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('member.store') }}",
+                    url: "{{ route('meja.store') }}",
                     mimeType: 'application/json',
                     dataType: 'json',
                     data: formData,
@@ -668,7 +647,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{ route('member.destroy.batch') }}",
+                url: "{{ route('meja.destroy.batch') }}",
                 data: $(form).serialize(),
                 beforeSend: function() {
                     console.log('otw')

@@ -75,14 +75,14 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ $member }}</h3>
+                        <h3>{{ $meja }}</h3>
 
                         <p>Pesanan</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-address-card"></i>
                     </div>
-                    <a href="{{ route('member.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('meja.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -90,14 +90,14 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>{{ $supplier }}</h3>
+                        <h3>{{ $meja }}</h3>
 
                         <p>Meja</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-truck"></i>
                     </div>
-                    <a href="{{ route('supplier.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('meja.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
