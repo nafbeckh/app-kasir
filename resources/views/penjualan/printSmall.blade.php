@@ -29,10 +29,9 @@
             <div class="row text-center">
                 <div class="col-12">
                     <img src="{{ asset('assets/dist/img') }}/{{ $toko->path_logo }}" alt="Logo" class="brand-image" style="width: 50%;">
-                    <span style="font-size: xx-large;"><b>{{ $toko->nama_toko }}</b></span>
+                    <br><b><span style="font-size: x-large;">{{ $toko->nama_toko }}</span></b>
                     <br><span style="font-size: large;">{{ $toko->alamat }}</span>
                     <br><span style="font-size: large;">{{ $toko->telp }}</span>
-                    <br>Kpd : {{ $penjualan->member->nama }}
                     <br>Tgl Pemb: {{ date('d-M-Y H:i:s', strtotime($penjualan->created_at)) }}
                     <br>
                 </div>

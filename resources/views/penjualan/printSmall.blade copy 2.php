@@ -155,10 +155,6 @@
     <table class="bill-details line">
         <tbody>
             <tr>
-                <td>Kpd : <span>{{ $penjualan->member->nama }}</span></td>
-                <!-- <td>Time : <span>2</span></td> -->
-            </tr>
-            <tr>
                 <td>Kasir : <span>{{ $penjualan->user->nama }}</span></td>
                 <!-- <td>Time : <span>2</span></td> -->
             </tr>

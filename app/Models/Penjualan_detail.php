@@ -9,7 +9,7 @@ class Penjualan_detail extends Model
 {
     use HasFactory;
     protected $fillable = [
-       'penjualan_id', 'produk_id', 'harga_jual', 'jumlah', 'diskon', 'subtotal'
+       'penjualan_id', 'produk_id', 'harga_jual', 'jumlah', 'subtotal'
     ];
 
     public function penjualan()

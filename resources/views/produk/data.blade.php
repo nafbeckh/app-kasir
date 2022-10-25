@@ -58,9 +58,7 @@
                                 <th>Nama</th>
                                 <th>Kategori</th>
                                 <th>Harga Jual</th>
-                                <th>Diskon</th>
                                 <th>Ket</th>
-                                <th>Stok</th>
                                 <th class="text-center dt-no-sorting">Aksi</th>
                             </tr>
                         </thead>
@@ -108,24 +106,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="diskon" class="col-sm-3 col-form-label"><i class="fas fa-percent mr-1" data-toggle="tooltip" title="Diskon"></i>Diskon :</label>
-                            <div class="col-sm-9">
-                                <input type="number" name="diskon" class="form-control" id="diskon" placeholder="Masukkan Diskon" required value="0">
-                                <span id="err_diskon" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="harga_jual" class="col-sm-3 col-form-label"><i class="fas fa-money-bill mr-1" data-toggle="tooltip" title="Harga Jual"></i>Harga Jual :</label>
                             <div class="col-sm-9">
                                 <input type="number" name="harga_jual" class="form-control" id="harga_jual" placeholder="Masukkan Harga Jual" required value="0">
                                 <span id="err_harga_jual" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="stok" class="col-sm-3 col-form-label"><i class="fas fa-layer-group mr-1" data-toggle="tooltip" title="Stok"></i>Stok :</label>
-                            <div class="col-sm-9">
-                                <input type="number" name="stok" class="form-control" id="stok" placeholder="Masukkan stok" required value="0">
-                                <span id="err_stok" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -178,24 +162,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="edit_diskon" class="col-sm-3 col-form-label"><i class="fas fa-percent mr-1" data-toggle="tooltip" title="Diskon"></i>Diskon :</label>
-                            <div class="col-sm-9">
-                                <input type="number" name="diskon" class="form-control" id="edit_diskon" placeholder="Masukkan Diskon" required value="0">
-                                <span id="err_edit_diskon" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="edit_harga_jual" class="col-sm-3 col-form-label"><i class="fas fa-money-bill mr-1" data-toggle="tooltip" title="Harga Jual"></i>Harga Jual :</label>
                             <div class="col-sm-9">
                                 <input type="number" name="harga_jual" class="form-control" id="edit_harga_jual" placeholder="Masukkan Harga Jual" required value="0">
                                 <span id="err_edit_harga_jual" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="edit_stok" class="col-sm-3 col-form-label"><i class="fas fa-layer-group mr-1" data-toggle="tooltip" title="Stok"></i>Stok :</label>
-                            <div class="col-sm-9">
-                                <input type="number" name="stok" class="form-control" id="edit_stok" placeholder="Masukkan stok" required value="0">
-                                <span id="err_edit_stok" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -320,9 +290,10 @@
                 "<'table-responsive'tr>" +
                 "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
             autoWidth: false,
-            columnDefs: [{
-                    "className": "text-right",
-                    "targets": [4, 5, 6]
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: [4],
                 },
                 {
                     targets: 0,
@@ -331,15 +302,10 @@
                     orderable: !1,
                 },
                 {
-                    targets: 1,
-                    width: "30px",
+                    targets: [1, 6],
                     className: "text-center",
                     orderable: !1,
-                }, {
-                    targets: 8,
-                    className: "text-center",
-                    orderable: !1,
-                }
+                },
             ],
             'select': {
                 'style': 'multi'
@@ -370,13 +336,7 @@
                     render: function(data, type, row, meta) {
                         return harga(data)
                     }
-                }, {
-                    data: 'diskon',
-                    title: 'Diskon'
-                }, {
-                    data: 'stok',
-                    title: 'Stok'
-                }, {
+                },{
                     data: 'ket',
                     title: 'Keterangan'
                 },

@@ -20,7 +20,6 @@ class CreatePenjualansTable extends Migration
             $table->string('kode_penj')->unique();
             $table->integer('total_item');
             $table->integer('total_harga');
-            $table->integer('diskon');
             $table->integer('bayar');
             $table->integer('diterima');
             $table->foreign('meja_id')->references('id')->on('mejas')->cascadeOnDelete()->cascadeOnUpdate();

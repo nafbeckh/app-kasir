@@ -19,7 +19,6 @@ class CreatePenjualanDetailsTable extends Migration
             $table->unsignedBigInteger('produk_id');
             $table->integer('harga_jual');
             $table->integer('jumlah');
-            $table->integer('diskon');
             $table->integer('subtotal');
             $table->foreign('penjualan_id')->references('id')->on('penjualans')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('produk_id')->references('id')->on('produks')->cascadeOnDelete()->cascadeOnUpdate();

@@ -54,10 +54,9 @@
                             <tr>
                                 <th class="text-center checkbox-column dt-no-sorting"><input type="checkbox" class="text-center new-control-input chk-parent select-customers-info" data-toggle="tooltip" title="Select All Data"></th>
                                 <th>Tanggal</th>
-                                <th>Kode Member</th>
+                                <th>Meja</th>
                                 <th>Total Item</th>
                                 <th>Total Harga</th>
-                                <th>Diskon</th>
                                 <th>Total Bayar</th>
                                 <th>Kasir</th>
                                 <th class="text-center dt-no-sorting">Aksi</th>
@@ -92,7 +91,6 @@
                                 <th>Nama</th>
                                 <th>Harga</th>
                                 <th>Jumlah</th>
-                                <th>Diskon</th>
                                 <th>Subtotal</th>
                             </tr>
                         </thead>
@@ -165,7 +163,7 @@
             autoWidth: false,
             columnDefs: [{
                     "className": "text-center",
-                    "targets": [0, 1, 2, 3, 4, 5, 6, 8]
+                    "targets": [0, 1, 2, 3, 4, 5, 6, 7]
                 },
                 {
                     targets: 0,
@@ -173,7 +171,7 @@
                     className: "text-center",
                     orderable: !1,
                 }, {
-                    targets: 8,
+                    targets: 7,
                     className: "text-center",
                     orderable: !1,
                 }
@@ -195,8 +193,8 @@
                     }
                 },
                 {
-                    data: 'member.kode_member',
-                    title: "Kode Member",
+                    data: 'meja.nama',
+                    title: "Meja",
                     render: function(data, type, row, meta) {
                         return `<span class="badge badge-success">${data}</span>`
                     }
@@ -210,13 +208,7 @@
                     render: function(data, type, row, meta) {
                         return harga(data)
                     }
-                }, {
-                    data: 'diskon',
-                    title: 'Diskon',
-                    render: function(data, type, row, meta) {
-                        return `${data}%`
-                    }
-                }, {
+                },{
                     data: 'bayar',
                     title: 'Bayar',
                     render: function(data, type, row, meta) {
@@ -338,7 +330,7 @@
             ordering: false,
             columnDefs: [{
                 "className": "text-center",
-                "targets": [0, 2, 3, 4, 5]
+                "targets": [0, 2, 3, 4]
             }],
             columns: [{
                 render: function(data, type, row) {
@@ -349,10 +341,6 @@
                     return harga(data);
                 },
             }, {}, {
-                render: function(data, type, row) {
-                    return `${data}%`;
-                },
-            }, {
                 render: function(data, type, row) {
                     return harga(data);
                 },
@@ -429,7 +417,6 @@
                             res.data.penjualan_detail[i].produk.nama_prod,
                             res.data.penjualan_detail[i].harga_jual,
                             res.data.penjualan_detail[i].jumlah,
-                            res.data.penjualan_detail[i].diskon,
                             res.data.penjualan_detail[i].subtotal,
                         ]).draw()
                     }

@@ -74,12 +74,12 @@
                 <form method="POST" action="" class="mb-2">
                     @csrf
                     <div class="input-group row mb-2">
-                        <label for="member" class="col-sm-2 col-form-label">Member</label>
-                        <select id="member" class="form-control col-sm-9 select2 select2bs4">
-                            <option value="">Pilih Member</option>
+                        <label for="meja" class="col-sm-2 col-form-label">meja</label>
+                        <select id="meja" class="form-control col-sm-9 select2 select2bs4">
+                            <option value="">Pilih Meja</option>
                         </select>
                         <div class="input-group-append">
-                            <button type="button" id="btnMember" class="btn btn-primary btn-flat" data-toggle="tooltip" title="Tambah Member">
+                            <button type="button" id="btnMeja" class="btn btn-primary btn-flat" data-toggle="tooltip" title="Tambah Meja">
                                 <i class="fas fa-plus-circle"></i>
                             </button>
                         </div>
@@ -202,16 +202,16 @@
     </div>
 </div>
 
-<div class="modal animated fade fadeInDown" id="modalMember" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal animated fade fadeInDown" id="modalMeja" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fas fa-user mr-1" data-toggle="tooltip" title="Tambah Member"></i>Tambah Member</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fas fa-user mr-1" data-toggle="tooltip" title="Tambah Meja"></i>Tambah Meja</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" data-toggle="tooltip" title="Close">&times;</span>
                 </button>
             </div>
-            <form id="formMember" action="" method="POST" enctype="multipart/form-data">
+            <form id="formMeja" action="" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="container">
                         <div class="form-group row">
@@ -308,11 +308,11 @@
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         })
-        $("#member").select2({
+        $("#meja").select2({
             theme: 'bootstrap4',
             ajax: {
                 delay: 1000,
-                url: "{{ route('member.index') }}",
+                url: "{{ route('meja.index') }}",
                 processResults: function(data) {
                     return {
                         results: $.map(data.data, function(item) {
@@ -322,7 +322,7 @@
                                 nama: item.nama,
                                 alamat: item.alamat,
                                 telp: item.telp,
-                                kode: item.kode_member
+                                kode: item.kode_meja
                             }
                         })
                     };
@@ -330,11 +330,11 @@
             }
         })
 
-        $('#btnMember').click(function() {
-            $('#modalMember').modal('show')
+        $('#btnMeja').click(function() {
+            $('#modalMeja').modal('show')
         })
 
-        $('#formMember').submit(function(event) {
+        $('#formMeja').submit(function(event) {
             event.preventDefault();
         }).validate({
             errorElement: 'span',
@@ -358,7 +358,7 @@
                 });
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('member.store') }}",
+                    url: "{{ route('meja.store') }}",
                     mimeType: 'application/json',
                     dataType: 'json',
                     data: formData,
@@ -367,10 +367,10 @@
                     beforeSend: function() {
                         $('button[type="submit"]').prop('disabled', true);
                         console.log('loading bro');
-                        $('#formMember .error.invalid-feedback').each(function(i) {
+                        $('#formMeja .error.invalid-feedback').each(function(i) {
                             $(this).hide();
                         });
-                        $('#formMember input.is-invalid').each(function(i) {
+                        $('#formMeja input.is-invalid').each(function(i) {
                             $(this).removeClass('is-invalid');
                         });
                     },
@@ -697,11 +697,11 @@
 
         $('#simpantrx').click(function(event) {
             event.preventDefault();
-            let memb = $('#member').val()
+            let memb = $('#meja').val()
             if (memb == '') {
                 Swal.fire(
                     'Failed!',
-                    'Pilih Member!',
+                    'Pilih Meja!',
                     'error'
                 )
             } else {
@@ -750,7 +750,7 @@
                                     type: "POST",
                                     url: "{{ route('penjualan.store') }}",
                                     data: {
-                                        member_id: $('#member').select2('data')[0].id,
+                                        meja_id: $('#meja').select2('data')[0].id,
                                         total_item: total,
                                         total_harga: $('#total').val(),
                                         diskon: $('#diskon').val(),
@@ -764,7 +764,7 @@
                                     success: function(res) {
                                         $('#simpantrx').prop('disabled', false);
                                         tabletrx.clear().draw()
-                                        $('#member').val('').change()
+                                        $('#meja').val('').change()
                                         $('#diskon').val(0)
                                         $('#lunas').prop('checked', false).change()
                                         $('#bayar').val(0).change()

@@ -25,7 +25,6 @@
                     <span style="font-size: xx-large;"><b>{{ $toko->nama_toko }}</b></span>
                     <br>{{ $toko->alamat }}
                     <br>{{ $toko->telp }}
-                    <br>Kpd : {{ $penjualan->member->nama }}
                     <br>Tgl Pemb: {{ date('d/M/Y H:i:s', strtotime($penjualan->created_at)) }}
                     <br>
                 </div>
