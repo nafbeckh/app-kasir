@@ -18,8 +18,8 @@ class CreateProduksTable extends Migration
             $table->unsignedBigInteger('kategori_id');
             $table->string('nama_prod');
             $table->string('kode_prod')->unique();
-            $table->string('merk_prod')->nullable();
-            $table->integer('harga_beli');
+            // $table->string('merk_prod')->nullable();
+            // $table->integer('harga_beli');
             $table->integer('harga_jual');
             $table->integer('diskon')->default(0);
             $table->integer('stok')->default(0);

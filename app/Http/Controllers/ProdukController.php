@@ -65,8 +65,6 @@ class ProdukController extends Controller
         //
         $this->validate($request, [
             'nama'          => 'required|max:50|min:2|unique:produks,nama_prod',
-            'merk'          => 'required|max:50|min:2',
-            'harga_beli'    => 'required',
             'harga_jual'    => 'required',
             'diskon'        => 'required',
             'stok'          => 'required',
@@ -77,8 +75,6 @@ class ProdukController extends Controller
         $produk = Produk::create([
             'nama_prod'     => $request->nama,
             'kode_prod'     => $kode,
-            'merk_prod'     => $request->merk,
-            'harga_beli'    => $request->harga_beli,
             'harga_jual'    => $request->harga_jual,
             'diskon'        => $request->diskon,
             'stok'          => $request->stok,
@@ -133,8 +129,6 @@ class ProdukController extends Controller
         //
         $this->validate($request, [
             'nama'      => 'required|max:50|min:2|unique:produks,nama_prod,' . $produk->id,
-            'merk'      => 'required|max:50|min:2',
-            'harga_beli'  => 'required',
             'harga_jual'  => 'required',
             'diskon'  => 'required',
             'stok'  => 'required',
@@ -143,8 +137,6 @@ class ProdukController extends Controller
         $produk = Produk::findOrFail($produk->id);
         $produk->update([
             'nama_prod'     => $request->nama,
-            'merk_prod'     => $request->merk,
-            'harga_beli'    => $request->harga_beli,
             'harga_jual'    => $request->harga_jual,
             'diskon'        => $request->diskon,
             'stok'          => $request->stok,

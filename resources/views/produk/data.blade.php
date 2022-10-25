@@ -56,9 +56,7 @@
                                 <th class="text-center checkbox-column dt-no-sorting"><input type="checkbox" class="text-center new-control-input chk-parent select-customers-info" data-toggle="tooltip" title="Select All Data"></th>
                                 <th>Kode</th>
                                 <th>Nama</th>
-                                <th>Merk</th>
                                 <th>Kategori</th>
-                                <th>Harga Beli</th>
                                 <th>Harga Jual</th>
                                 <th>Diskon</th>
                                 <th>Ket</th>
@@ -101,13 +99,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="merk" class="col-sm-3 col-form-label"><i class="fas fa-tags mr-1" data-toggle="tooltip" title="Merk Produk"></i>Merk Produk :</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="merk" class="form-control" id="merk" placeholder="Masukkan Merk" required>
-                                <span id="err_merk" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="kategori" class="col-sm-3 col-form-label"><i class="fas fa-cube mr-1" data-toggle="tooltip" title="Pilihan Kategori Produk"></i>Kategori Produk:</label>
                             <div class="col-sm-9">
                                 <select name="kategori" id="kategori" class="form-control select2 select2bs4" style="width: 100%;" required>
@@ -121,13 +112,6 @@
                             <div class="col-sm-9">
                                 <input type="number" name="diskon" class="form-control" id="diskon" placeholder="Masukkan Diskon" required value="0">
                                 <span id="err_diskon" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="harga_beli" class="col-sm-3 col-form-label"><i class="fas fa-money-bill-wave mr-1" data-toggle="tooltip" title="Harga Beli"></i>Harga Beli :</label>
-                            <div class="col-sm-9">
-                                <input type="number" name="harga_beli" class="form-control" id="harga_beli" placeholder="Masukkan Harga Beli" required value="0">
-                                <span id="err_harga_beli" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -185,13 +169,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="edit_merk" class="col-sm-3 col-form-label"><i class="fas fa-tags mr-1" data-toggle="tooltip" title="Merk Produk"></i>Merk Produk :</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="merk" class="form-control" id="edit_merk" placeholder="Masukkan Merk" required>
-                                <span id="err_edit_merk" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="edit_kategori" class="col-sm-3 col-form-label"><i class="fas fa-cube mr-1" data-toggle="tooltip" title="Pilihan Kategori Produk"></i>Kategori Produk:</label>
                             <div class="col-sm-9">
                                 <select name="kategori" id="edit_kategori" class="form-control select2 select2bs4" style="width: 100%;" required>
@@ -205,13 +182,6 @@
                             <div class="col-sm-9">
                                 <input type="number" name="diskon" class="form-control" id="edit_diskon" placeholder="Masukkan Diskon" required value="0">
                                 <span id="err_edit_diskon" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="edit_harga_beli" class="col-sm-3 col-form-label"><i class="fas fa-money-bill-wave mr-1" data-toggle="tooltip" title="Harga Beli"></i>Harga Beli :</label>
-                            <div class="col-sm-9">
-                                <input type="number" name="harga_beli" class="form-control" id="edit_harga_beli" placeholder="Masukkan Harga Beli" required value="0">
-                                <span id="err_edit_harga_beli" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -351,16 +321,22 @@
                 "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
             autoWidth: false,
             columnDefs: [{
-                    "className": "text-center",
-                    "targets": [0, 1, 5, 6, 7, 8, 10]
+                    "className": "text-right",
+                    "targets": [4, 5, 6]
                 },
                 {
                     targets: 0,
                     width: "30px",
                     className: "text-center",
                     orderable: !1,
+                },
+                {
+                    targets: 1,
+                    width: "30px",
+                    className: "text-center",
+                    orderable: !1,
                 }, {
-                    targets: 10,
+                    targets: 8,
                     className: "text-center",
                     orderable: !1,
                 }
@@ -384,19 +360,10 @@
                 {
                     data: 'nama_prod',
                     title: "Nama",
-                }, {
-                    data: 'merk_prod',
-                    title: 'Merk'
                 },
                 {
                     data: 'kategori.nama_kat',
                     title: 'Kategori'
-                }, {
-                    data: 'harga_beli',
-                    title: 'Harga Beli',
-                    render: function(data, type, row, meta) {
-                        return harga(data)
-                    }
                 }, {
                     data: 'harga_jual',
                     title: 'Harga Jual',
@@ -624,8 +591,6 @@
                     console.log(result)
                     $('#edit_reset').val(result.data.id);
                     $('#edit_nama').val(result.data.nama_prod);
-                    $('#edit_merk').val(result.data.merk_prod);
-                    $('#edit_harga_beli').val(result.data.harga_beli);
                     $('#edit_harga_jual').val(result.data.harga_jual);
                     $('#edit_diskon').val(result.data.diskon);
                     $('#edit_stok').val(result.data.stok);
@@ -662,8 +627,6 @@
                     console.log(result)
                     $('#edit_reset').val(result.data.id);
                     $('#edit_nama').val(result.data.nama_prod);
-                    $('#edit_merk').val(result.data.merk_prod);
-                    $('#edit_harga_beli').val(result.data.harga_beli);
                     $('#edit_harga_jual').val(result.data.harga_jual);
                     $('#edit_diskon').val(result.data.diskon);
                     $('#edit_stok').val(result.data.stok);

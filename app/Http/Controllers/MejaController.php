@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meja;
-use App\Models\Produk;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -54,14 +53,10 @@ class MejaController extends Controller
         //
         $this->validate($request, [
             'nama'    => 'required|max:50|min:2|unique:mejas,nama',
-            'status'    => 'required',
         ]);
         $meja = Meja::latest()->first() ?? new Meja();
-        $kode = 'Meja' . tambah_nol_didepan((int)$meja->id + 1, 6);
         $meja = Meja::create([
-            'kode_meja'     => $kode,
             'nama'            => $request->nama,
-            'status'          => $request->status,
         ]);
         if ($meja) {
             return response()->json(['status' => true, 'message' => 'Success Insert Data']);
@@ -110,13 +105,11 @@ class MejaController extends Controller
     {
         //
         $this->validate($request, [
-            'nama'      => 'required|max:50|min:2|unique:Mejas,nama,' . $meja->id,
-            'status'  => 'required|max:50',
+            'nama'      => 'required|max:50|min:2|unique:mejas,nama,' . $meja->id,
         ]);
         $meja = Meja::findOrFail($meja->id);
         $meja->update([
             'nama'            => $request->nama,
-            'status'          => $request->status,
         ]);
 
         if ($meja) {

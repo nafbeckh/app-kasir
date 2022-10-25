@@ -54,7 +54,6 @@
                         <thead>
                             <tr>
                                 <th class="text-center checkbox-column dt-no-sorting"><input type="checkbox" class="text-center new-control-input chk-parent select-customers-info" data-toggle="tooltip" title="Select All Data"></th>
-                                <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Status</th>
                                 <th class="text-center dt-no-sorting">Aksi</th>
@@ -94,13 +93,6 @@
                                 <span id="err_nama" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="status" class="col-sm-3 col-form-label"><i class="fas fa-map-marker mr-1" data-toggle="tooltip" title="Status"></i>Status</label>
-                            <div class="col-sm-9">
-                                <textarea name="status" id="status" class="form-control" placeholder="Masukkan Status" required></textarea>
-                                <span id="err_status" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -133,13 +125,6 @@
                             <div class="col-sm-9">
                                 <input type="text" name="nama" class="form-control" id="edit_nama" placeholder="Masukkan Nama" minlength="2" maxlength="50" required>
                                 <span id="err_edit_nama" class="error invalid-feedback" style="display: hide;"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="edit_status" class="col-sm-3 col-form-label"><i class="fas fa-map-marker mr-1" data-toggle="tooltip" title="Status"></i>Status</label>
-                            <div class="col-sm-9">
-                                <textarea name="status" id="edit_status" class="form-control" placeholder="Masukkan Status"></textarea>
-                                <span id="err_edit_status" class="error invalid-feedback" style="display: hide;"></span>
                             </div>
                         </div>
                     </div>
@@ -220,17 +205,14 @@
                 }
             }, "copy", "csv", "excel", "pdf", "print", "colvis"],
             autoWidth: false,
-            columnDefs: [{
-                    "className": "text-center",
-                    "targets": [0, 1, 5]
-                },
+            columnDefs: [
                 {
                     targets: 0,
                     width: "30px",
                     className: "text-center",
                     orderable: !1,
                 }, {
-                    targets: 5,
+                    targets: 3,
                     className: "text-center",
                     orderable: !1,
                 }
@@ -245,19 +227,12 @@
                     }
                 },
                 {
-                    data: 'kode_meja',
-                    title: "Kode",
-                    render: function(data, type, row, meta) {
-                        return `<span class="badge badge-success">${data}</span>`
-                    }
-                },
-                {
                     data: 'nama',
-                    title: "Nama"
+                    title: "Nama",
                 },
                 {
                     data: 'status',
-                    title: 'Status'
+                    title: "Status",
                 },
                 {
                     title: 'Action',
@@ -271,7 +246,7 @@
                     }
                 }
             ],
-            "buttons": [, {
+            "buttons": [{
                 text: '<i class="fa fa-plus"></i>Add',
                 className: 'btn btn-sm btn-primary bs-tooltip',
                 attr: {
@@ -317,27 +292,27 @@
                 buttons: [{
                     extend: 'copy',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1]
                     }
                 }, {
                     extend: 'csv',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1]
                     }
                 }, {
                     extend: 'pdf',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1]
                     }
                 }, {
                     extend: 'excel',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1]
                     }
                 }, {
                     extend: 'print',
                     exportOptions: {
-                        columns: [1, 2, 3, 4]
+                        columns: [1]
                     }
                 }],
             }, {
@@ -434,7 +409,6 @@
                 success: function(result) {
                     $('#edit_reset').val(result.data.id);
                     $('#edit_nama').val(result.data.nama);
-                    $('#edit_status').val(result.data.status);
                 },
                 error: function(xhr, status, error) {
                     er = xhr.responseJSON.errors
@@ -464,7 +438,6 @@
                 success: function(result) {
                     $('#edit_reset').val(result.data.id);
                     $('#edit_nama').val(result.data.nama);
-                    $('#edit_status').val(result.data.status);
                 },
                 error: function(xhr, status, error) {
                     er = xhr.responseJSON.errors
@@ -636,6 +609,7 @@
                 });
             }
         });
+
         $('#formDeleteBatch').submit(function(event) {
             var form = this;
 
