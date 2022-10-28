@@ -132,52 +132,21 @@
                                 </p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item {{ $title == 'Data Pembelian' || $title == 'Tambah Pembelian' ? 'menu-open' : '' }}">
-                            <a href="{{ route('pembelian.index') }}" class="nav-link {{ $title == 'Data Pembelian' || $title == 'Tambah Pembelian' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-download"></i>
-                                <p>
-                                    Pembelian
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('pembelian.index') }}" class="nav-link {{ $title == 'Data Pembelian' ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Data Pembelian</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('pembelian.create') }}" class="nav-link {{ $title == 'Tambah Pembelian' ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tambah Pembelian</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> --}}
-
-                        <li class="nav-item {{ $title == 'Data Penjualan' || $title == 'Tambah Penjualan' ? 'menu-open' : '' }}">
-                            <a href="{{ route('penjualan.index') }}" class="nav-link {{ $title == 'Data Penjualan' || $title == 'Tambah Penjualan' ? 'active' : '' }}">
+                        <li class="nav-item">
+                            <a href="{{ route('penjualan.index') }}" class="nav-link {{ $title == 'Data Penjualan' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-upload"></i>
                                 <p>
                                     Penjualan
-                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('penjualan.index') }}" class="nav-link {{ $title == 'Data Penjualan' ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Data Penjualan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('penjualan.create') }}" class="nav-link {{ $title == 'Tambah Penjualan' ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tambah Penjualan</p>
-                                    </a>
-                                </li>
-                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('penjualan.transaksi') }}" class="nav-link {{ $title == 'Transaksi' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-money-bill"></i>
+                                <p>
+                                    Transaksi
+                                </p>
+                            </a>
                         </li>
 
                         <li class="nav-header">PESANAN AKTIF</li>
@@ -199,7 +168,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('laporan.pendapatan') }}" class="nav-link {{ $title == 'Laporan Menu Terlaris' ? 'active' : '' }}">
+                            <a href="{{ route('laporan.terlaris') }}" class="nav-link {{ $title == 'Laporan Menu Terlaris' ? 'active' : '' }}">
                                 <i class="fas fa-file-pdf nav-icon"></i>
                                 <p>Laporan Menu Terlaris</p>
                             </a>

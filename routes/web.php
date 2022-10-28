@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('pengeluaran/destroyBatch', [PengeluaranController::class, 'destroyBatch'])->name('pengeluaran.destroy.batch');
         Route::resource('pengeluaran', PengeluaranController::class)->except('create', 'show');
 
+        Route::get('penjualan/transaksi', [PenjualanController::class, 'transaksi'])->name('penjualan.transaksi');
         Route::get('penjualan/{penjualan}/print', [PenjualanController::class, 'print'])->name('penjualan.print');
         Route::post('penjualan/destroyBatch', [PenjualanController::class, 'destroyBatch'])->name('penjualan.destroy.batch');
         Route::resource('penjualan', PenjualanController::class)->except('update', 'show');
@@ -64,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/setting', [SettingController::class, 'update'])->name('setting.toko.update');
 
         Route::get('/laporan/pendapatan', [LaporanController::class, 'index'])->name('laporan.pendapatan');
-        Route::get('/laporan/kasir', [LaporanController::class, 'kasir'])->name('laporan.kasir');
+        Route::get('/laporan/terlaris', [LaporanController::class, 'terlaris'])->name('laporan.terlaris');
         Route::get('/laporan/perbulan', [LaporanController::class, 'bulan'])->name('laporan.perbulan');
     });
     // Route::group(['middleware' => ['role:kasir']], function () {
