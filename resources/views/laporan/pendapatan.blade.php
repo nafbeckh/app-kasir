@@ -59,6 +59,16 @@
             </div>
             <div class="card-body">
                 <div class="form-group row">
+                    <label for="pilihan" class="col-sm-2 col-form-label">Pilih Waktu :</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="pilihan">
+                            <option value="Hari ini">Hari ini</option>
+                            <option value="Minggu ini">Minggu ini</option>
+                            <option value="Bulan ini">Bulan ini</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="tanggal" class="col-sm-2 col-form-label">Periode :</label>
                     <div class="col-sm-10">
                         <div class="input-group">
@@ -81,7 +91,6 @@
                                 <th class="text-center dt-no-sorting">No</th>
                                 <th>Tanggal</th>
                                 <th>Penjualan</th>
-                                <th>Pembelian</th>
                                 <th>Pengeluaran</th>
                                 <th>Pendapatan</th>
                             </tr>
@@ -90,13 +99,9 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="4" rowspan="4"></th>
+                                <th colspan="3" rowspan="3"></th>
                                 <th>Total Penjualan</th>
                                 <td id="totalPenjualan">0</td>
-                            </tr>
-                            <tr class="text-center">
-                                <th>Total Pembelian</th>
-                                <td id="totalPembelian">0</td>
                             </tr>
                             <tr class="text-center">
                                 <th>Total Pengeluaran</th>
@@ -154,7 +159,7 @@
                 format: 'YYYY-MM-DD',
                 separator: " sampai "
             },
-            startDate: moment().subtract(7, 'd').format("YYYY-MM-DD"),
+            // startDate: moment().subtract(0, 'd').format("YYYY-MM-DD"),
         }).on('change', function() {
             let start = $(this).data('daterangepicker').startDate.format('YYYY-MM-DD')
             let end = $(this).data('daterangepicker').endDate.format('YYYY-MM-DD')
@@ -162,7 +167,6 @@
                 if (res.status == true) {
                     table.clear().draw()
                     let totalpenj = 0
-                    let totalpemb = 0
                     let totalpeng = 0
                     let totalpend = 0
                     for (i = 0; i < res.data.length; i++) {
@@ -170,17 +174,55 @@
                             0,
                             res.data[i].tanggal,
                             res.data[i].penjualan,
-                            res.data[i].pembelian,
                             res.data[i].pengeluaran,
                             res.data[i].pendapatan
                         ]).draw();
                         totalpenj += parseInt(res.data[i].penjualan)
-                        totalpemb += parseInt(res.data[i].pembelian)
                         totalpeng += parseInt(res.data[i].pengeluaran)
                         totalpend += parseInt(res.data[i].pendapatan)
                     }
                     $('#totalPenjualan').text(harga(totalpenj))
-                    $('#totalPembelian').text(harga(totalpemb))
+                    $('#totalPengeluaran').text(harga(totalpeng))
+                    $('#totalPendapatan').text(harga(totalpend))
+                } else {
+                    Swal.fire(
+                        'Failed!',
+                        res.message,
+                        'error'
+                    )
+                }
+            })
+        })
+
+        $('#pilihan').change(function() {
+            if (this.value == 'Hari ini') {
+                let start = new Date();
+                let end = new Date();
+                console.log(start + end);
+            } else if (this.value == 'Minggu ini') {
+                console.log('coy');
+            } else if (this.value == 'Bulan ini') {
+                console.log('gg');
+            }
+            $.get(`{{ route('laporan.pendapatan') }}?awal=${start}&akhir=${end}`).done(function(res) {
+                if (res.status == true) {
+                    table.clear().draw()
+                    let totalpenj = 0
+                    let totalpeng = 0
+                    let totalpend = 0
+                    for (i = 0; i < res.data.length; i++) {
+                        table.row.add([
+                            0,
+                            res.data[i].tanggal,
+                            res.data[i].penjualan,
+                            res.data[i].pengeluaran,
+                            res.data[i].pendapatan
+                        ]).draw();
+                        totalpenj += parseInt(res.data[i].penjualan)
+                        totalpeng += parseInt(res.data[i].pengeluaran)
+                        totalpend += parseInt(res.data[i].pendapatan)
+                    }
+                    $('#totalPenjualan').text(harga(totalpenj))
                     $('#totalPengeluaran').text(harga(totalpeng))
                     $('#totalPendapatan').text(harga(totalpend))
                 } else {
@@ -206,7 +248,7 @@
             autoWidth: true,
             columnDefs: [{
                 "className": "text-center",
-                "targets": [0, 1, 2, 3, 4, 5]
+                "targets": [0, 1, 2, 3, 4]
             }],
             columns: [{
                     render: function(data, type, row, meta) {
@@ -232,11 +274,7 @@
                         return harga(data);
                     }
                 },
-                {
-                    render: function(data, type, row) {
-                        return harga(data);
-                    }
-                }
+               
             ]
         })
 
