@@ -202,7 +202,7 @@ class PenjualanController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $toko = Setting::first();
-        $penjualan = Penjualan::where('status', '=', 'Belum Bayar')->with('meja')->get();
+        $penjualan = Penjualan::where('status', '=', 'Belum Bayar')->with('meja')->orderByDesc('created_at')->get();
         return view('penjualan.transaksi', compact(['user', 'toko', 'penjualan']))->with('title', 'Transaksi');
     }
 

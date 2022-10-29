@@ -88,6 +88,7 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        @hasrole('admin')
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link {{ $title == 'Dashboard' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -97,7 +98,6 @@
                                 </p>
                             </a>
                         </li>
-                        @hasrole('admin')
                         <li class="nav-header">DATA MASTER</li>
                         <li class="nav-item">
                             <a href="{{ route('kategori.index') }}" class="nav-link {{ $title == 'Data Kategori' ? 'active' : '' }}">
@@ -217,10 +217,10 @@
                         @endhasrole
                         @hasrole('kasir')
                         <li class="nav-item">
-                            <a href="{{ route('penjualan.create') }}" class="nav-link {{ $title == 'Tambah Penjualan' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-upload"></i>
+                            <a href="{{ route('penjualan.transaksi') }}" class="nav-link {{ $title == 'Transaksi' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-money-bill"></i>
                                 <p>
-                                    Penjualan
+                                    Transaksi
                                 </p>
                             </a>
                         </li>
