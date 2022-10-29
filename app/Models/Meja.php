@@ -14,6 +14,6 @@ class Meja extends Model
 
     public function penjualan()
     {
-        return $this->hasOne(Penjualan::class);
+        return $this->hasMany(Penjualan::class);
     }
 }

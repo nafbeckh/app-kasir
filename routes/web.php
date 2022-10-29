@@ -59,7 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('penjualan/transaksi', [PenjualanController::class, 'transaksi'])->name('penjualan.transaksi');
         Route::get('penjualan/{penjualan}/print', [PenjualanController::class, 'print'])->name('penjualan.print');
         Route::post('penjualan/destroyBatch', [PenjualanController::class, 'destroyBatch'])->name('penjualan.destroy.batch');
-        Route::resource('penjualan', PenjualanController::class)->except('update', 'show');
+        Route::resource('penjualan', PenjualanController::class)->except('show');
 
         Route::get('/setting', [SettingController::class, 'index'])->name('setting.toko');
         Route::post('/setting', [SettingController::class, 'update'])->name('setting.toko.update');
@@ -83,7 +83,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/laporan/penjualanKasir', [LaporanController::class, 'penjualanKasir'])->name('laporan.penjualan.kasir');
         Route::get('/penjualan/printLast', [PenjualanController::class, 'penjualanPrintLast'])->name('penjualan.print.last');
-        Route::resource('penjualan', PenjualanController::class)->only('create', 'store');
+        Route::get('/penjualan/pembayaran/{id}', [PenjualanController::class, 'pembayaran'])->name('penjualan.pembayaran');
+        Route::resource('penjualan', PenjualanController::class)->only('update', 'create', 'store',);
     });
 });
 

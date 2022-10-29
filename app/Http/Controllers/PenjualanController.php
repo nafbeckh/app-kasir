@@ -7,6 +7,7 @@ use App\Models\Penjualan_detail;
 use App\Models\Produk;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\Meja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -40,7 +41,7 @@ class PenjualanController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $toko = Setting::first();
-        return view('penjualan.create', compact(['user', 'toko']))->with('title', 'Tambah Penjualan');
+        return view('penjualan.create', compact(['user', 'toko']))->with('title', 'Pembayaran Transaksi');
     }
 
     /**
@@ -103,25 +104,34 @@ class PenjualanController extends Controller
     public function edit(Request $request, Penjualan $penjualan)
     {
         //
-        if ($request->ajax()) {
-            $penjualan =  Penjualan::with('meja', 'penjualan_detail.produk')->find($penjualan->id);
-            return response()->json(['status' => true, 'message' => '', 'data' => $penjualan]);
-        } else {
-            abort(404);
-        }
+        abort(404);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Penjualan  $penjualan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Penjualan $penjualan)
+    public function update(Request $request, $id)
     {
-        //
-        abort(404);
+        if ($request) {
+            $penjualan = Penjualan::findOrFail($id);
+            $penjualan->update([
+                'bayar'            => $request->bayar,
+                'diterima'         => $request->diterima,
+                'status'           => 'Sudah Bayar'
+            ]);
+                
+            if ($penjualan) {
+                return response()->json(['status' => true, 'message' => 'Transaction Success']);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Transaction Failed']);
+            }
+        } else {
+            abort(404);
+        }
+        
     }
 
     /**
@@ -185,5 +195,29 @@ class PenjualanController extends Controller
         } else {
             abort(404, 'belum ada data');
         }
+    }
+
+    public function transaksi()
+    {
+        $id = Auth::id();
+        $user = User::find($id);
+        $toko = Setting::first();
+        $penjualan = Penjualan::where('status', '=', 'Belum Bayar')->with('meja')->get();
+        return view('penjualan.transaksi', compact(['user', 'toko', 'penjualan']))->with('title', 'Transaksi');
+    }
+
+    public function pembayaran(Request $request, $id)
+    {
+        $penjualan = Penjualan::where('status', '=', 'Belum Bayar')->with('meja')->findOrFail($id);
+        if ($request->ajax()) {
+            return DataTables::of(Penjualan_detail::select('produks.nama_prod', 'produks.harga_jual', 'jumlah', 'subtotal')
+            ->join('produks', 'produks.id', '=', 'penjualan_details.produk_id')
+            ->where('penjualan_details.penjualan_id', $id)->get())->toJson();
+        }
+
+        $id = Auth::id();
+        $user = User::find($id);
+        $toko = Setting::first();
+        return view('penjualan.pembayaran', compact(['user', 'toko', 'penjualan']))->with('title', 'Pembayaran Transaksi '.$penjualan->meja->nama);
     }
 }
