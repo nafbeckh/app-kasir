@@ -174,36 +174,6 @@
                             </a>
                         </li>
 
-                        {{-- <li class="nav-item {{ $title == 'Laporan Pendapatan' || $title == 'Laporan Kasir' || $title == 'Laporan Supplier' ? 'menu-open' : '' }}">
-                            <a href="{{ route('penjualan.index') }}" class="nav-link {{ $title == 'Laporan Pendapatan' || $title == 'Laporan Kasir' || $title == 'Laporan Supplier' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-file-pdf"></i>
-                                <p>
-                                    Laporan
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('laporan.pendapatan') }}" class="nav-link {{ $title == 'Laporan Pendapatan' ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Laporan Pendapatan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('laporan.kasir') }}" class="nav-link {{ $title == 'Laporan Kasir' ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Laporan Kasir</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('laporan.supplier') }}" class="nav-link {{ $title == 'Laporan Supplier' ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Laporan Supplier</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> --}}
-
                         <li class="nav-header">SYSTEM</li>
 
                         <li class="nav-item">
@@ -216,6 +186,14 @@
                         </li>
                         @endhasrole
                         @hasrole('kasir')
+                        <li class="nav-item">
+                            <a href="{{ route('penjualan.index') }}" class="nav-link {{ $title == 'Data Penjualan' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-upload"></i>
+                                <p>
+                                    Penjualan
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('penjualan.transaksi') }}" class="nav-link {{ $title == 'Transaksi' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-money-bill"></i>

@@ -51,25 +51,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                            $totaldisk = 0;
-                            @endphp
                             @foreach($penjualan->penjualan_detail as $prod)
-                            @php
-                            $totaldisk += ($prod->harga_jual*$prod->jumlah*$prod->diskon/100);
-                            @endphp
                             <tr>
                                 <td style="text-align: left;">{{ $prod->produk->nama_prod }}</td>
-                                <td style="text-align: right;">{{ format_uang($prod->harga_jual) }}</td>
+                                <td style="text-align: right;">{{ format_uang($prod->produk->harga_jual) }}</td>
                                 <td style="text-align: right;">{{ $prod->jumlah }}</td>
                                 <td style="text-align: right;">{{ format_uang($prod->subtotal) }}</td>
                             </tr>
-                            @if($prod->diskon > 0)
-                            <tr>
-                                <td colspan="3" style="text-align: right;">Diskon : </td>
-                                <td style="text-align: right;">(-{{ format_uang($prod->harga_jual*$prod->jumlah*$prod->diskon/100)  }})</td>
-                            </tr>
-                            @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -82,25 +70,17 @@
                     <!-- ############################ -->
                     <table style="width: 100%">
                         <tr>
-                            <td style="text-align: right;">Total Harga :</td>
-                            <td style="text-align: right;">{{ format_uang($penjualan->total_harga) }}</td>
+                            <th style="text-align: right;">Total Harga :</th>
+                            <th style="text-align: right;">{{ format_uang($penjualan->total_harga) }}</th>
                         </tr>
-                        @if($penjualan->diskon > 0)
                         <tr>
-                            <td style="text-align: right;">Diskon Toko :</td>
-                            <td style="text-align: right;">{{ format_uang($penjualan->total_harga*$penjualan->diskon/100) }}</td>
+                            <th style="text-align: right;">Bayar :</th>
+                            <th style="text-align: right;">{{ format_uang($penjualan->diterima) }}</th>
                         </tr>
-                        @endif
                         <tr>
-                            <th style="text-align: right;">Grand Total :</th>
-                            <th style="text-align: right;">{{ format_uang($penjualan->bayar) }}</th>
+                            <th style="text-align: right;">Kembali :</th>
+                            <th style="text-align: right;">{{ format_uang($penjualan->diterima - $penjualan->total_harga) }}</th>
                         </tr>
-                        @if($totaldisk > 0)
-                        <tr>
-                            <td style="text-align: right;">Anda Hemat :</td>
-                            <td style="text-align: right;">{{ format_uang($totaldisk+($penjualan->total_harga*$penjualan->diskon/100)) }}</td>
-                        </tr>
-                        @endif
                     </table>
                     ===========================
                     <!-- **************************** -->
@@ -113,7 +93,7 @@
                         <!-- ########################## -->
 
                     </div>
-                    <div class="text-center">
+                    {{-- <div class="text-center">
                         <b>THANK YOU</b>
                     </div>
                     <div class="text-center">
@@ -125,7 +105,7 @@
                         <br>--
 
                     </div>
-                    <div class="mb-3"></div>
+                    <div class="mb-3"></div> --}}
                 </div>
             </div>
         </section>

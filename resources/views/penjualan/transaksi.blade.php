@@ -22,6 +22,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
+            @if (count($penjualan))
             @foreach($penjualan as $item)
             <div class="col-lg-3 col-6">
                 <!-- small box -->
@@ -39,8 +40,14 @@
             </div>
             <!-- ./col -->
             @endforeach
+            @else
+            <div class="col-12">
+                <div class="callout">
+                    <h5>Belum ada transaksi</h5>
+                </div>
+            </div>
+            @endif
         </div>
-   
     </div>
 </section>
 @endsection

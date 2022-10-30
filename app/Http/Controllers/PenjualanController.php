@@ -25,7 +25,7 @@ class PenjualanController extends Controller
         $user = Auth::user();
         $toko = Setting::first();
         if ($request->ajax()) {
-            return DataTables::of(Penjualan::with('meja', 'user')->get())->toJson();
+            return DataTables::of(Penjualan::where('status', '=', 'Sudah Bayar')->with('meja', 'user')->get())->toJson();
         }
         return view('penjualan.data', compact(['user', 'toko']))->with('title', 'Data Penjualan');
     }
@@ -104,7 +104,12 @@ class PenjualanController extends Controller
     public function edit(Request $request, Penjualan $penjualan)
     {
         //
-        abort(404);
+        if ($request->ajax()) {
+            $penjualan =  Penjualan::with('meja', 'penjualan_detail.produk')->find($penjualan->id);
+            return response()->json(['status' => true, 'message' => '', 'data' => $penjualan]);
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -180,20 +185,16 @@ class PenjualanController extends Controller
         }
     }
 
-    public function print(Request $request, Penjualan $penjualan)
+    public function print($penjualan)
     {
         $id = Auth::id();
         $user = User::find($id);
         $toko = Setting::first();
-        $penjualan = Penjualan::with('penjualan_detail', 'user', 'meja')->find($penjualan->id);
+        $penjualan = Penjualan::where('status', '=', 'Sudah Bayar')->with('penjualan_detail', 'user', 'meja')->find($penjualan);
         if ($penjualan) {
-            if ($request->area == 'full') {
-                return view('penjualan.printFull', compact(['penjualan', 'user', 'toko']))->with('title', 'Print Penjualan');
-            } else {
-                return view('penjualan.printSmall', compact(['penjualan', 'user', 'toko']))->with('title', 'Print Penjualan');
-            }
+            return view('penjualan.printSmall', compact(['penjualan', 'user', 'toko']))->with('title', 'Print Penjualan');
         } else {
-            abort(404, 'belum ada data');
+            abort(404, 'belum ada transaksi');
         }
     }
 

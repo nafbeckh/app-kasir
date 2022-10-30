@@ -100,7 +100,7 @@
                             <div class="form-group row">
                                 <label for="bayar" class="col-sm-4 control-label">Bayar</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="bayar" class="form-control" value="0">
+                                    <input type="text" id="bayar" class="form-control" value="0" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -263,6 +263,7 @@
                             success: function (res) {
                                 if (res.status == true) {
                                     Swal.fire('Success!', res.message, 'success');
+                                    window.open("{{route('penjualan.print',  $penjualan->id)}}", '_blank');
                                     window.location.href = "{{route('penjualan.index')}}";
                                 } else {
                                     Swal.fire('Failed!', res.message, 'error')

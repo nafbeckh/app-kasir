@@ -51,7 +51,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('produk', ProdukController::class)->except('create', 'show');
 
         // Pindah dlu
-        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
         Route::resource('produk', ProdukController::class)->only('index');
         Route::resource('meja', MejaController::class)->only('store', 'index');
 
@@ -81,11 +80,12 @@ Route::group(['middleware' => 'auth'], function () {
         
         // Route::get('/laporan/penjualanKasir', [LaporanController::class, 'penjualanKasir'])->name('laporan.penjualan.kasir');
         // Route::get('/penjualan/printLast', [PenjualanController::class, 'penjualanPrintLast'])->name('penjualan.print.last');
+        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
         
         Route::get('penjualan/transaksi', [PenjualanController::class, 'transaksi'])->name('penjualan.transaksi');
-        Route::get('penjualan/{penjualan}/print', [PenjualanController::class, 'print'])->name('penjualan.print');
+        Route::get('penjualan/print/{penjualan}', [PenjualanController::class, 'print'])->name('penjualan.print');
         Route::get('/penjualan/pembayaran/{id}', [PenjualanController::class, 'pembayaran'])->name('penjualan.pembayaran');
-        Route::resource('penjualan', PenjualanController::class)->only('update');
+        Route::resource('penjualan', PenjualanController::class)->only('index', 'edit', 'update');
     });
 });
 

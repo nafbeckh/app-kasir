@@ -225,28 +225,23 @@
                         let text = `<div class="btn-group">
                         <button type="button" id="btnPrint" data-id="${data}" class="btn btn-xs bg-gradient-warning"><i class="fas fa-print text-white" data-toggle="tooltip" data-placement="top" title="Print"></i></button>
                         <button type="button" id="btnDetail" data-id="${data}" class="btn btn-xs bg-gradient-info"><i class="fas fa-eye text-white" data-toggle="tooltip" data-placement="top" title="Detail"></i></button>
-                        <button type="button" id="btnDelete" data-id="${data}" class="btn btn-xs bg-gradient-danger"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete"></i></button>
-                        </div>`;
+                        `;
+
+                        let role = "{{$user->hasRole('admin') ? 'Y' : 'N'}}";
+                        role == 'Y' ? text += '<button type="button" id="btnDelete" data-id="${data}" class="btn btn-xs bg-gradient-danger"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete"></i></button></div>' : '';
+                        
                         return text;
                     }
                 }
             ],
-            "buttons": [, {
-                text: '<i class="fa fa-plus"></i>Add',
-                className: 'btn btn-sm btn-primary bs-tooltip',
-                attr: {
-                    'data-toggle': 'tooltip',
-                    'title': 'Add Data'
-                },
-                action: function(e, dt, node, config) {
-                    window.location.replace("{{ route('penjualan.create') }}")
-                }
-            }, {
+            "buttons": [{
                 text: '<i class="fas fa-trash"></i>Del',
                 className: 'btn btn-sm btn-danger',
                 attr: {
+                    'id': 'delAdmin',
                     'data-toggle': 'tooltip',
-                    'title': 'Delete Selected Data'
+                    'title': 'Delete Selected Data',
+                    'hidden': 'hidden'
                 },
                 action: function(e, dt, node, config) {
                     Swal.fire({
@@ -321,6 +316,8 @@
             }
         });
         multiCheck(table);
+        let role = "{{$user->hasRole('admin') ? 'Y' : 'N'}}";
+        role == 'Y' ? $('#delAdmin').removeAttr('hidden') : '';
 
         var tbdetail = $('#tbDetail').DataTable({
             info: false,
@@ -415,7 +412,7 @@
                         tbdetail.row.add([
                             res.data.penjualan_detail[i].produk.kode_prod,
                             res.data.penjualan_detail[i].produk.nama_prod,
-                            res.data.penjualan_detail[i].harga_jual,
+                            res.data.penjualan_detail[i].produk.harga_jual,
                             res.data.penjualan_detail[i].jumlah,
                             res.data.penjualan_detail[i].subtotal,
                         ]).draw()

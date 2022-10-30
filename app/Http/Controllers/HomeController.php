@@ -37,7 +37,8 @@ class HomeController extends Controller
         if ($user->hasRole('admin')) {
             return view('dashboard.admin', compact(['user', 'toko', 'kategori', 'produk', 'meja']))->with('title', 'Dashboard');
         } else {
-            return view('dashboard.kasir', compact(['user', 'toko']))->with('title', 'Dashboard');
+            return redirect()->route('penjualan.transaksi');
+            // return view('dashboard.kasir', compact(['user', 'toko']))->with('title', 'Dashboard');
         }
     }
 
