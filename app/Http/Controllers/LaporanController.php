@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
+use App\Models\Pengeluaran;
 use App\Models\Terlaris;
 use App\Models\Setting;
 use App\Models\User;

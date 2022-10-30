@@ -59,16 +59,17 @@
             </div>
             <div class="card-body">
                 <div class="form-group row">
-                    <label for="pilihan" class="col-sm-2 col-form-label">Pilih Waktu :</label>
+                    <label for="pilihan" class="col-sm-2 col-form-label">Pilih Periode :</label>
                     <div class="col-sm-3">
                         <select class="form-control" id="pilihan">
                             <option value="Hari ini">Hari ini</option>
                             <option value="Minggu ini">Minggu ini</option>
                             <option value="Bulan ini">Bulan ini</option>
+                            <option value="Kostum">Kostum Tanggal</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" id="kostumTanggal" hidden>
                     <label for="tanggal" class="col-sm-2 col-form-label">Periode :</label>
                     <div class="col-sm-10">
                         <div class="input-group">
@@ -159,7 +160,7 @@
                 format: 'YYYY-MM-DD',
                 separator: " sampai "
             },
-            // startDate: moment().subtract(0, 'd').format("YYYY-MM-DD"),
+            startDate: moment().subtract(0, 'd').format("YYYY-MM-DD"),
         }).on('change', function() {
             let start = $(this).data('daterangepicker').startDate.format('YYYY-MM-DD')
             let end = $(this).data('daterangepicker').endDate.format('YYYY-MM-DD')
@@ -195,15 +196,20 @@
         })
 
         $('#pilihan').change(function() {
-            if (this.value == 'Hari ini') {
-                let start = new Date();
-                let end = new Date();
-                console.log(start + end);
-            } else if (this.value == 'Minggu ini') {
-                console.log('coy');
+            $('#kostumTanggal').attr('hidden', true);
+            let start = "{{date('Y-m-d')}}";
+            let end = start;
+
+            if (this.value == 'Minggu ini') {
+                start = "{{date('Y-m-d', strtotime('-7 day'))}}";
+                end = "{{date('Y-m-d')}}";
             } else if (this.value == 'Bulan ini') {
-                console.log('gg');
+                start = "{{date('Y-m-01')}}";
+                end = "{{date('Y-m-t')}}";
+            }  else if (this.value == 'Kostum'){
+                $('#kostumTanggal').attr('hidden', false);
             }
+
             $.get(`{{ route('laporan.pendapatan') }}?awal=${start}&akhir=${end}`).done(function(res) {
                 if (res.status == true) {
                     table.clear().draw()
@@ -231,7 +237,7 @@
                         res.message,
                         'error'
                     )
-                }
+                }  
             })
         })
 

@@ -149,16 +149,6 @@
                             </a>
                         </li>
 
-                        <li class="nav-header">PESANAN AKTIF</li>
-                        <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link {{ $title == 'Pesanan' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Pesanan
-                                </p>
-                            </a>
-                        </li>
-
                         <li class="nav-header">LAPORAN</li>
                         <li class="nav-item">
                             <a href="{{ route('laporan.pendapatan') }}" class="nav-link {{ $title == 'Laporan Pendapatan' ? 'active' : '' }}">
