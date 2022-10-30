@@ -9,7 +9,7 @@ class Penjualan extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'meja_id', 'user_id', 'total_item', 'total_harga', 'bayar', 'diterima', 'status', 'kode_penj'
+        'meja_id', 'waiters_id', 'kasir_id', 'total_item', 'total_harga', 'bayar', 'diterima', 'status'
     ];
 
     public function penjualan_detail()
@@ -22,8 +22,13 @@ class Penjualan extends Model
         return $this->belongsTo(Meja::class);
     }
 
-    public function user()
+    public function waiters()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'waiters_id');
+    }
+
+    public function kasir()
+    {
+        return $this->belongsTo(User::class, 'kasir_id');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Models\Meja;
 use App\Models\Produk;
+use App\Models\Penjualan;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,9 +34,10 @@ class HomeController extends Controller
         $toko = Setting::first();
         $kategori = Kategori::count();
         $produk = Produk::count();
+        $transaksi = Penjualan::where('status', '=', 'Belum Bayar')->count();
         $meja = Meja::count();
         if ($user->hasRole('admin')) {
-            return view('dashboard.admin', compact(['user', 'toko', 'kategori', 'produk', 'meja']))->with('title', 'Dashboard');
+            return view('dashboard.admin', compact(['user', 'toko', 'kategori', 'produk', 'transaksi', 'meja']))->with('title', 'Dashboard');
         } else {
             return redirect()->route('penjualan.transaksi');
             // return view('dashboard.kasir', compact(['user', 'toko']))->with('title', 'Dashboard');

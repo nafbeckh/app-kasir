@@ -87,7 +87,7 @@
                     <!-- ############################ -->
                     <div class="text-center">
                         Cetak : {{ date('d-M-Y H:i:s') }}
-                        <br>Kasir : {{ $penjualan->user->nama }}
+                        <br>Kasir : {{ $penjualan->kasir->nama }}
                         =========================
                         <!-- ************************** -->
                         <!-- ########################## -->

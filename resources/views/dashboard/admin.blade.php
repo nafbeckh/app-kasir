@@ -75,14 +75,14 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ $meja }}</h3>
+                        <h3>{{ $transaksi }}</h3>
 
-                        <p>Pesanan</p>
+                        <p>Transaksi</p>
                     </div>
                     <div class="icon">
-                        <i class="fas fa-address-card"></i>
+                        <i class="fas fa-wallet"></i>
                     </div>
-                    <a href="{{ route('meja.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('penjualan.transaksi') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -95,7 +95,7 @@
                         <p>Meja</p>
                     </div>
                     <div class="icon">
-                        <i class="fas fa-truck"></i>
+                        <i class="fas fa-table"></i>
                     </div>
                     <a href="{{ route('meja.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>

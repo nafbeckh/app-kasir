@@ -25,7 +25,7 @@ class PenjualanController extends Controller
         $user = Auth::user();
         $toko = Setting::first();
         if ($request->ajax()) {
-            return DataTables::of(Penjualan::where('status', '=', 'Sudah Bayar')->with('meja', 'user')->get())->toJson();
+            return DataTables::of(Penjualan::where('status', '=', 'Sudah Bayar')->with('meja', 'kasir')->get())->toJson();
         }
         return view('penjualan.data', compact(['user', 'toko']))->with('title', 'Data Penjualan');
     }
@@ -55,9 +55,8 @@ class PenjualanController extends Controller
         //
         $penjualan = Penjualan::latest()->first() ?? new Penjualan();
         $penjualan = Penjualan::create([
-            'meja_id'     => $request->input('meja_id'),
-            'user_id'       => Auth::id(),
-            'kode_penj'     => 'INV' . tambah_nol_didepan((int)$penjualan->id + 1, 6),
+            'meja_id'       => $request->input('meja_id'),
+            'waiters_id'    => Auth::id(),
             'total_item'    => $request->input('total_item'),
             'total_harga'   => $request->input('total_harga'),
             'bayar'         => $request->input('bayar'),
@@ -121,8 +120,10 @@ class PenjualanController extends Controller
     public function update(Request $request, $id)
     {
         if ($request) {
+            $kasir_id = Auth::id();
             $penjualan = Penjualan::findOrFail($id);
             $penjualan->update([
+                'kasir_id'         => $kasir_id,
                 'bayar'            => $request->bayar,
                 'diterima'         => $request->diterima,
                 'status'           => 'Sudah Bayar'
@@ -176,7 +177,7 @@ class PenjualanController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $toko = Setting::first();
-        $penjualan = Penjualan::where('user_id', $id)->with('penjualan_detail', 'user', 'meja')->get()->last();
+        $penjualan = Penjualan::where('kasir_id', $id)->with('penjualan_detail', 'kasir', 'meja')->get()->last();
         // return response()->json($penjualan);
         if ($penjualan) {
             return view('penjualan.printSmall', compact(['penjualan', 'user', 'toko']))->with('title', 'Print Penjualan');
@@ -190,7 +191,7 @@ class PenjualanController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $toko = Setting::first();
-        $penjualan = Penjualan::where('status', '=', 'Sudah Bayar')->with('penjualan_detail', 'user', 'meja')->find($penjualan);
+        $penjualan = Penjualan::where('status', '=', 'Sudah Bayar')->with('penjualan_detail', 'kasir', 'meja')->find($penjualan);
         if ($penjualan) {
             return view('penjualan.printSmall', compact(['penjualan', 'user', 'toko']))->with('title', 'Print Penjualan');
         } else {

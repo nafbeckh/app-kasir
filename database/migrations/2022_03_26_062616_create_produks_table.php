@@ -17,12 +17,7 @@ class CreateProduksTable extends Migration
             $table->id();
             $table->unsignedBigInteger('kategori_id');
             $table->string('nama_prod');
-            $table->string('kode_prod')->unique();
-            // $table->string('merk_prod')->nullable();
-            // $table->integer('harga_beli');
             $table->integer('harga_jual');
-            $table->integer('diskon')->default(0);
-            $table->integer('stok')->default(0);
             $table->string('ket')->nullable();
             $table->foreign('kategori_id')->references('id')->on('kategoris')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

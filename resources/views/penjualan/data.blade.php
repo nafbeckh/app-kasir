@@ -215,7 +215,7 @@
                         return harga(data)
                     }
                 }, {
-                    data: 'user.nama',
+                    data: 'kasir.nama',
                     title: 'Kasir',
                 },
                 {
