@@ -79,6 +79,8 @@
                             <option value="Kostum">Kostum Periode</option>
                         </select>
                     </div>
+                    <input type="text" id="awal" hidden>
+                    <input type="text" id="akhir" hidden>
                 </div>
                 <div class="form-group row" id="kostumTanggal" hidden>
                     <label for="tanggal" class="col-sm-2 col-form-label">Kostum Periode :</label>
@@ -101,7 +103,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center dt-no-sorting">No</th>
-                                {{-- <th>Tanggal</th> --}}
+                                <th>Tanggal</th>
                                 <th>Kategori</th>
                                 <th>Nama</th>
                                 <th>Terjual</th>
@@ -156,56 +158,54 @@
                 format: 'YYYY-MM-DD',
                 separator: " sampai "
             },
-            // startDate: moment().subtract(0, 'd').format("YYYY-MM-DD"),
+            startDate: moment().subtract(0, 'd').format("YYYY-MM-DD"),
         }).on('change', function() {
             let start = $(this).data('daterangepicker').startDate.format('YYYY-MM-DD')
             let end = $(this).data('daterangepicker').endDate.format('YYYY-MM-DD')
-            $.get(`{{ route('laporan.terlaris') }}?awal=${start}&akhir=${end}`).done(function(res) {
-                if (res.status == true) {
-                    table.clear().draw()
-                    for (i = 0; i < res.data.length; i++) {
-                        table.row.add([
-                            0,
-                            res.data[i].tanggal,
-                            res.data[i].penjualan,
-                            res.data[i].pengeluaran,
-                            res.data[i].pendapatan
-                        ]).draw();
-                    }
-                } else {
-                    Swal.fire(
-                        'Failed!',
-                        res.message,
-                        'error'
-                    )
+            $('#awal').val(start);
+            $('#akhir').val(end);
+            $.ajax({
+                type: "GET",
+                url: "{{ route('laporan.terlaris') }}",
+                data: {
+                    kategori: $('#pilihKat').val(),
+                    awal: start,
+                    akhir: end
+                },
+                success: function (res) {
+                    table.clear();
+                    table.rows.add(res.data).draw();
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    Swal.fire('Failed!', 'Server Error', 'error')
                 }
-            })
+            });
         })
-
+        
         var table = $('#table').DataTable({
             info: false,
             paging: false,
             searching: false,
-            ajax: "{{ route('laporan.terlaris') }}",
             lengthchange: false,
             ordering: false,
             autoWidth: true,
             columnDefs: [{
                 "className": "text-center",
-                "targets": [0, 1, 2, 3]
+                "targets": [0, 1, 2, 3, 4]
             }],
             columns: [{
                     render: function(data, type, row, meta) {
                         return parseInt(meta.row) + parseInt(meta.settings._iDisplayStart) + 1;
                     }
                 },
-                // {
-                //     data: 'created_at',
-                //     title: "Tanggal",
-                //     render: function(data, type, row, meta) {
-                //         return indo_date(data)
-                //     }
-                // },
+                {
+                    data: 'tanggal',
+                    title: "Tanggal",
+                    render: function(data, type, row, meta) {
+                        return indo_date(data)
+                    }
+                },
                 {
                     data: 'nama_kat',
                     title: "Kategori",
@@ -220,21 +220,72 @@
                     }
                 }, {
                     data: 'jumlah',
-                    title: "Jumlah",
+                    title: "Terjual",
                     render: function(data, type, row, meta) {
                         return data
                     }
                 },
             ]
         })
-    })
 
-    $('#pilihPeriode').change(function (){
-        if (this.value == 'Kostum') {
-            $('#kostumTanggal').removeAttr('hidden');
-        } else {
-            $('#kostumTanggal').attr('hidden', 'hidden');
-        }
+        $('#pilihKat').change(function (){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('laporan.terlaris') }}",
+                data: {
+                    kategori: this.value,
+                    awal: $('#awal').val(),
+                    akhir: $('#akhir').val()
+                },
+                success: function (res) {
+                    table.clear();
+                    table.rows.add(res.data).draw();
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    Swal.fire('Failed!', 'Server Error', 'error')
+                }
+            });
+        })
+
+        $('#pilihPeriode').change(function (){
+            $('#kostumTanggal').attr('hidden', true);
+            let awal = "{{date('Y-m-d')}}";
+            let akhir = awal;
+
+            if (this.value == 'Minggu ini') {
+                awal = "{{date('Y-m-d', strtotime('-7 day'))}}";
+                akhir = "{{date('Y-m-d')}}";
+            } else if (this.value == 'Bulan ini') {
+                awal = "{{date('Y-m-01')}}";
+                akhir = "{{date('Y-m-t')}}";
+            } else if (this.value == 'Kostum') {
+                $('#kostumTanggal').attr('hidden', false);
+            }
+
+            $('#awal').val(awal);
+            $('#akhir').val(akhir);
+
+            $.ajax({
+                type: "GET",
+                url: "{{ route('laporan.terlaris') }}",
+                data: {
+                    kategori: $('#pilihKat').val(),
+                    awal: awal,
+                    akhir: akhir
+                },
+                success: function (res) {
+                    table.clear();
+                    table.rows.add(res.data).draw();
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    Swal.fire('Failed!', 'Server Error', 'error')
+                }
+            });
+        })
+
+        $('#tanggal').change();
     })
 </script>
 @endpush

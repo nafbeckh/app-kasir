@@ -20,9 +20,9 @@ class CreatePenjualansTable extends Migration
             $table->unsignedBigInteger('kasir_id');
             $table->integer('total_item');
             $table->integer('total_harga');
-            $table->integer('bayar')->default(0)->change();
-            $table->integer('diterima')->default(0)->change();
-            $table->enum('status', ['Sudah Bayar', 'Belum Bayar'])->default('Belum Bayar')->change();
+            $table->integer('bayar')->default(0);
+            $table->integer('diterima')->default(0);
+            $table->enum('status', ['Sudah Bayar', 'Belum Bayar'])->default('Belum Bayar');
             $table->foreign('meja_id')->references('id')->on('mejas')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('waiters_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('kasir_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
