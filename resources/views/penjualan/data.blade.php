@@ -228,7 +228,7 @@
                         `;
 
                         let role = "{{$user->hasRole('admin') ? 'Y' : 'N'}}";
-                        role == 'Y' ? text += '<button type="button" id="btnDelete" data-id="${data}" class="btn btn-xs bg-gradient-danger"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete"></i></button></div>' : '';
+                        role == 'Y' ? text += `<button type="button" id="btnDelete" data-id="${data}" class="btn btn-xs bg-gradient-danger"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete"></i></button></div>` : '';
                         
                         return text;
                     }
