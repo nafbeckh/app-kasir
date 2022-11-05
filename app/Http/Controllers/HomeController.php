@@ -38,9 +38,11 @@ class HomeController extends Controller
         $meja = Meja::count();
         if ($user->hasRole('admin')) {
             return view('dashboard.admin', compact(['user', 'toko', 'kategori', 'produk', 'transaksi', 'meja']))->with('title', 'Dashboard');
-        } else {
+        } else if ($user->hasRole('kasir')) {
             return redirect()->route('penjualan.transaksi');
             // return view('dashboard.kasir', compact(['user', 'toko']))->with('title', 'Dashboard');
+        } else {
+            return redirect()->route('notifikasi.index');
         }
     }
 

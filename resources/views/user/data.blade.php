@@ -128,6 +128,7 @@
                                 <option value="admin">Admin</option>
                                 <option value="kasir">Kasir</option>
                                 <option value="kasir">Waiters</option>
+                                <option value="bartender">Bartender</option>
                             </select>
                             <span id="err_level" class="error invalid-feedback" style="display: hide;"></span>
                         </div>

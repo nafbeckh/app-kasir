@@ -37,6 +37,20 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown" onclick="fetchNotif()">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                      <i class="far fa-bell"></i>
+                      <span class="badge badge-warning navbar-badge" id="counterNotif"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="fetchNotf">
+                      <span class="dropdown-item dropdown-header ntf">1 Notifikasi</span>
+                      <div class="dropdown-divider"></div>
+                      <div id="fetchNotif">
+                        
+                      </div>
+                      <a href="{{route('notifikasi.index')}}" class="dropdown-item dropdown-footer">Lihat Semua Notifikasi</a>
+                    </div>
+                  </li>
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ asset('assets/dist/img/') }}/{{ $user->foto }}" class="user-image img-circle elevation-2" alt="User Image">
@@ -57,11 +71,6 @@
                             <a href="javascript:void(0);" onclick="logout_()" class="btn btn-default btn-flat float-right">Sign out</a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
                 </li>
             </ul>
         </nav>
@@ -193,6 +202,16 @@
                             </a>
                         </li>
                         @endhasrole
+                        @hasrole('bartender')
+                        <li class="nav-item">
+                            <a href="{{ route('notifikasi.index') }}" class="nav-link {{ $title == 'Semua Notifikasi' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-bell"></i>
+                                <p>
+                                    Notifikasi
+                                </p>
+                            </a>
+                        </li>
+                        @endhasrole
                         <li class="nav-item {{ $title == 'Setting Toko' || $title == 'Setting Profile' ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ $title == 'Setting Toko' || $title == 'Setting Profile' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-sliders-h"></i>
@@ -263,7 +282,8 @@
     <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
     <!-- pace-progress -->
     <script src="{{ asset('assets/plugins/pace-progress/pace.min.js') }}"></script>
-
+    <script src="{{ asset('assets/dist/js/pusher.min.js') }}"></script>
+    
     @stack('js')
     <script>
         function logout_() {
@@ -294,8 +314,49 @@
             // console.clear();
             // logout_()
             // Swal.fire('Any fool can use a computer')
-        })
-    </script>
-</body>
 
+            // setInterval(countNotif, 5000);
+
+            Pusher.logToConsole = true;
+            var pusher = new Pusher('a2c0df40a01f5334b6a6', {
+            cluster: 'ap1'
+            });
+
+            var channel = pusher.subscribe('kasir');
+            channel.bind('test', function(data) {
+                $('#counterNotif').html(data);
+            });
+        })
+
+        function countNotif(){
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('notifikasi.cekNotif') }}",
+                success: function(data){
+                    $('#counterNotif').html(data);
+                    $('.ntf').html(data + ' Notifikasi');
+
+                    if (data == 0) {
+                        $('.ntf').html('Tidak ada Notifikasi');
+                    }
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        }
+
+        function fetchNotif(){
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('notifikasi.fetchNotif') }}",
+                success: function(data){
+                    $('#fetchNotif').html(data);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        }
+    </script>
 </html>

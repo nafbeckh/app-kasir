@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     ProdukController,
     SettingController,
     UserController,
+    NotifikasiController,
 };
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -70,22 +71,29 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/laporan/terlaris', [LaporanController::class, 'terlaris'])->name('laporan.terlaris');
         Route::get('/laporan/perbulan', [LaporanController::class, 'bulan'])->name('laporan.perbulan');
     });
-    // Route::group(['middleware' => ['role:kasir']], function () {
-
-    // });
 
     Route::group(['middleware' => ['role:admin|kasir']], function () {
-        Route::get('/profile', [SettingController::class, 'profile'])->name('setting.profile');
-        Route::post('/profile', [SettingController::class, 'profileUpdate'])->name('setting.profileUpdate');
-        
         // Route::get('/laporan/penjualanKasir', [LaporanController::class, 'penjualanKasir'])->name('laporan.penjualan.kasir');
         // Route::get('/penjualan/printLast', [PenjualanController::class, 'penjualanPrintLast'])->name('penjualan.print.last');
-        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
         
         Route::get('penjualan/transaksi', [PenjualanController::class, 'transaksi'])->name('penjualan.transaksi');
         Route::get('penjualan/print/{penjualan}', [PenjualanController::class, 'print'])->name('penjualan.print');
         Route::get('/penjualan/pembayaran/{id}', [PenjualanController::class, 'pembayaran'])->name('penjualan.pembayaran');
         Route::resource('penjualan', PenjualanController::class)->only('index', 'edit', 'update');
+    });
+    Route::group(['middleware' => ['role:admin|kasir|bartender']], function () {
+        Route::get('/profile', [SettingController::class, 'profile'])->name('setting.profile');
+        Route::post('/profile', [SettingController::class, 'profileUpdate'])->name('setting.profileUpdate');
+
+        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+
+        Route::get('notifikasi/cekNotif', [NotifikasiController::class, 'cekNotif'])->name('notifikasi.cekNotif');
+        Route::get('notifikasi/fetchNotif', [NotifikasiController::class, 'fetchNotif'])->name('notifikasi.fetchNotif');
+        Route::get('notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+        Route::get('notifikasi/show/{notifikasi}', [NotifikasiController::class, 'show'])->name('notifikasi.show');
+        Route::post('notifikasi/destroyBatch', [NotifikasiController::class, 'destroyBatch'])->name('notifikasi.destroy.batch');
+        Route::post('notifikasi/readBatch', [NotifikasiController::class, 'readBatch'])->name('notifikasi.read.batch');
+        Route::resource('notifikasi', NotifikasiController::class)->except('create', 'show');
     });
 });
 

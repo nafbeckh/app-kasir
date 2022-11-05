@@ -46,11 +46,6 @@
 
                         <p class="text-muted text-center">{{ $user->email }}</p>
 
-                        <ul class="list-group list-group-unbordered mb-3">
-                            <li class="list-group-item">
-                                <b>Total Penjualan</b> <a class="float-right">Rp. {{ format_uang($penjualan) }}</a>
-                            </li>
-                        </ul>
                         <button type="button" onclick="logout_()" class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt mr-1"></i>LOGOUT</button>
                     </div>
                     <!-- /.card-body -->
