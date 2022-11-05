@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ env('NAMA_TOKO') }} | Log in</title>
+    <title>KDA Coffe and Foodcourt | Log in</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,7 +24,8 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="javascript:void(0);" class="h1"><b>{{ env('NAMA_TOKO') }}</b></a>
+                <img src="{{ asset('assets/dist/img') }}/logo-20221017153924.jpg" style="margin-bottom: -30px; margin-top:-10px" alt="Logo Toko" width="200px"><br>
+                <a href="javascript:void(0);" class="h1"><b>KDA Coffe and Foodcourt</b></a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
