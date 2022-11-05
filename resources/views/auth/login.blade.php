@@ -25,7 +25,7 @@
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <img src="{{ asset('assets/dist/img') }}/logo-20221017153924.jpg" style="margin-bottom: -30px; margin-top:-10px" alt="Logo Toko" width="200px"><br>
-                <a href="javascript:void(0);" class="h1"><b>KDA Coffe and Foodcourt</b></a>
+                <a href="javascript:void(0);" class="h1"><b>KDA Coffe & Foodcourt</b></a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
