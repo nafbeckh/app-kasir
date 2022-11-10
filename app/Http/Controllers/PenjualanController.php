@@ -54,33 +54,33 @@ class PenjualanController extends Controller
     public function store(Request $request)
     {
         //
-        $penjualan = Penjualan::latest()->first() ?? new Penjualan();
-        $penjualan = Penjualan::create([
-            'meja_id'       => $request->input('meja_id'),
-            'waiters_id'    => Auth::id(),
-            'total_item'    => $request->input('total_item'),
-            'total_harga'   => $request->input('total_harga'),
-            'bayar'         => $request->input('bayar'),
-            'diterima'      => $request->input('diterima'),
-        ]);
+        // $penjualan = Penjualan::latest()->first() ?? new Penjualan();
+        // $penjualan = Penjualan::create([
+        //     'meja_id'       => $request->input('meja_id'),
+        //     'waiters_id'    => Auth::id(),
+        //     'total_item'    => $request->input('total_item'),
+        //     'total_harga'   => $request->input('total_harga'),
+        //     'bayar'         => $request->input('bayar'),
+        //     'diterima'      => $request->input('diterima'),
+        // ]);
 
-        if ($penjualan) {
-            foreach ($request->input('produk') as $p) {
-                $penjualandt = Penjualan_detail::create([
-                    'penjualan_id' => $penjualan->id,
-                    'produk_id'    => $p[0],
-                    'harga_jual'   => $p[1],
-                    'jumlah'       => $p[2],
-                    'subtotal'     => $p[3],
-                ]);
-                // $produk = Produk::find($p[0]);
-                // $produk->stok -= $p[4];
-                // $produk->update();
-            }
-            return response()->json(['status' => true, 'message' => 'Success Insert Data']);
-        } else {
-            return response()->json(['status' => false, 'message' => 'Failed Insert Data']);
-        }
+        // if ($penjualan) {
+        //     foreach ($request->input('produk') as $p) {
+        //         $penjualandt = Penjualan_detail::create([
+        //             'penjualan_id' => $penjualan->id,
+        //             'produk_id'    => $p[0],
+        //             'harga_jual'   => $p[1],
+        //             'jumlah'       => $p[2],
+        //             'subtotal'     => $p[3],
+        //         ]);
+        //         // $produk = Produk::find($p[0]);
+        //         // $produk->stok -= $p[4];
+        //         // $produk->update();
+        //     }
+        //     return response()->json(['status' => true, 'message' => 'Success Insert Data']);
+        // } else {
+        //     return response()->json(['status' => false, 'message' => 'Failed Insert Data']);
+        // }
     }
 
     /**

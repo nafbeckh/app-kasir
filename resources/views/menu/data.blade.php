@@ -60,13 +60,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST">
+                <form action="" method="POST" id="menuForm">
                     <div class="container">
                         <div class="form-group row">
                             <label for="meja_id" class="col-sm-2 col-form-label">Meja :</label>
                             <div class="col-sm-4">
-                                <select class="form-control" name="meja_id" id="meja_id" required>
-                                    <option>-- Pilih --</option>
+                                <select class="form-control" name="meja_id" id="meja_id" required="required">
+                                    <option value="">-- Pilih --</option>
                                     @foreach ($meja as $item)
                                     <option value="{{$item->id}}">{{$item->nama}}</option>
                                     @endforeach
@@ -83,7 +83,7 @@
                 <h5 class="mr-auto" id="total-cart"></h5>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-default clear-cart">Reset</button>
-                <button type="button" class="btn btn-success">Pesan</button>
+                <button type="submit" class="btn btn-success" id="pesanMenu">Pesan</button>
             </div>
         </div>
     </div>
@@ -125,20 +125,70 @@
     })
     
     $('#pilihKat').change(function (){
-            $.ajax({
-                type: "GET",
-                data: {
-                    kategori: this.value,
-                    search:  $('#searchForm').val()
-                },
-                success: function (res) {
-                    $('#forItems').html(res)
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
-        })
+        $.ajax({
+            type: "GET",
+            data: {
+                kategori: this.value,
+                search:  $('#searchForm').val()
+            },
+            success: function (res) {
+                $('#forItems').html(res)
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    })
+
+    $('#pesanMenu').click(function() {
+        var cartArray = shoppingCart.listCart();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Pesan Menu?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: '<i class="fa fa-thumbs-up"></i> Yes!',
+            confirmButtonAriaLabel: 'Thumbs up, Yes!',
+            cancelButtonText: '<i class="fa fa-thumbs-down"></i> No',
+            cancelButtonAriaLabel: 'Thumbs down',
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        meja_id: $('#meja_id').val(),
+                        total_item: shoppingCart.totalCount(),
+                        total_harga: shoppingCart.totalCart(),
+                        produk: cartArray,
+                    },
+                    success: function (res) {
+                        shoppingCart.clearCart();
+                        Swal.fire(
+                            'Success!',
+                            res.message,
+                            'success'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    error: function (res) {
+                        Swal.fire(
+                            'Failed!',
+                            res.message,
+                            'error'
+                        )
+                    }
+                });
+            }
+        });
+    })
     
 </script>
 <script>
@@ -149,7 +199,8 @@
     cart = [];
     
     // Constructor
-    function Item(name, price, count) {
+    function Item(id, name, price, count) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.count = count;
@@ -175,31 +226,31 @@
     var obj = {};
     
     // Add to cart
-    obj.addItemToCart = function(name, price, count) {
+    obj.addItemToCart = function(id, name, price, count) {
         for(var item in cart) {
-        if(cart[item].name === name) {
+        if(cart[item].id === id) {
             cart[item].count ++;
             saveCart();
             return;
         }
         }
-        var item = new Item(name, price, count);
+        var item = new Item(id, name, price, count);
         cart.push(item);
         saveCart();
     }
     // Set count from item
-    obj.setCountForItem = function(name, count) {
+    obj.setCountForItem = function(id, count) {
         for(var i in cart) {
-        if (cart[i].name === name) {
+        if (cart[i].id === id) {
             cart[i].count = count;
             break;
         }
         }
     };
     // Remove item from cart
-    obj.removeItemFromCart = function(name) {
+    obj.removeItemFromCart = function(id) {
         for(var item in cart) {
-            if(cart[item].name === name) {
+            if(cart[item].id === id) {
             cart[item].count --;
             if(cart[item].count === 0) {
                 cart.splice(item, 1);
@@ -211,9 +262,9 @@
     }
 
     // Remove all items from cart
-    obj.removeItemFromCartAll = function(name) {
+    obj.removeItemFromCartAll = function(id) {
         for(var item in cart) {
-        if(cart[item].name === name) {
+        if(cart[item].id === id) {
             cart.splice(item, 1);
             break;
         }
@@ -276,9 +327,10 @@
     })();
 
     function addToCart(e) {
+        var id = $(e).data('id');
         var name = $(e).data('name');
         var price = Number($(e).data('price'));
-        shoppingCart.addItemToCart(name, price, 1);
+        shoppingCart.addItemToCart(id, name, price, 1);
         displayCart();
     }
 
@@ -300,46 +352,48 @@
                 + '<p class="card-text">Rp '+ hrg(cartArray[i].price) +'</p></div>'
                 + '<div class="col-sm text-right">'
                 + '<div class="btn-group" role="group">'
-                + '<button type="button" class="btn btn-default mr-2 minus-item" data-name="'+ cartArray[i].name +'"><i class="fas fa-minus"></i></button>'
-                + '<input type="text" class="form-control text-center mr-2 item-count" style="width: 40px" name="jumlah" data-name="'+ cartArray[i].name +'" value="'+ cartArray[i].count +'">'
-                + '<button type="button" class="btn btn-default mr-2 plus-item" data-name="'+ cartArray[i].name +'"><i class="fas fa-plus"></i></button>'
-                + '<button type="button" class="btn btn-danger delete-item" data-name="'+ cartArray[i].name +'">Hapus</button>'
+                + '<button type="button" class="btn btn-default mr-2 minus-item" data-id="'+ cartArray[i].id +'"><i class="fas fa-minus"></i></button>'
+                + '<input type="text" class="form-control text-center mr-2 item-count" style="width: 40px" name="jumlah" data-id="'+ cartArray[i].id +'" value="'+ cartArray[i].count +'">'
+                + '<button type="button" class="btn btn-default mr-2 plus-item" data-id="'+ cartArray[i].id +'"><i class="fas fa-plus"></i></button>'
+                + '<button type="button" class="btn btn-danger delete-item" data-id="'+ cartArray[i].id +'">Hapus</button>'
                 + '</div></div></div></div></div>';
         }
         $('.show-cart').html(output);
         $('#total-cart').html('Total: Rp ' + hrg(shoppingCart.totalCart()));
         $('.total-count').html(shoppingCart.totalCount());
+        console.log(cartArray);
     }
 
     // Delete item button
     $('.show-cart').on("click", ".delete-item", function(event) {
-        var name = $(this).data('name')
-        shoppingCart.removeItemFromCartAll(name);
+        var id = $(this).data('id')
+        shoppingCart.removeItemFromCartAll(id);
         displayCart();
     })
 
     // -1
     $('.show-cart').on("click", ".minus-item", function(event) {
-        var name = $(this).data('name')
-        shoppingCart.removeItemFromCart(name);
+        var id = $(this).data('id')
+        shoppingCart.removeItemFromCart(id);
         displayCart();
     })
     
     // +1
     $('.show-cart').on("click", ".plus-item", function(event) {
-        var name = $(this).data('name')
-        shoppingCart.addItemToCart(name);
+        var id = $(this).data('id')
+        shoppingCart.addItemToCart(id);
         displayCart();
     })
 
     // Item count input
     $('.show-cart').on("change", ".item-count", function(event) {
-        var name = $(this).data('name');
+        var id = $(this).data('id');
         var count = Number($(this).val());
-        shoppingCart.setCountForItem(name, count);
+        shoppingCart.setCountForItem(id, count);
         displayCart();
     });
 
     displayCart();
+
 </script>
 @endpush
