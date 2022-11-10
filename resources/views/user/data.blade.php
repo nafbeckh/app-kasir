@@ -127,7 +127,7 @@
                             <select name="level" id="level" class="form-control select2 select2bs4" style="width: 100%;" required>
                                 <option value="admin">Admin</option>
                                 <option value="kasir">Kasir</option>
-                                <option value="kasir">Waiters</option>
+                                <option value="waiters">Waiters</option>
                                 <option value="bartender">Bartender</option>
                             </select>
                             <span id="err_level" class="error invalid-feedback" style="display: hide;"></span>
@@ -202,6 +202,8 @@
                             <select name="level" id="edit_level" class="form-control select2 select2bs4" style="width: 100%;" required>
                                 <option value="admin">Admin</option>
                                 <option value="kasir">Kasir</option>
+                                <option value="waiters">Waiters</option>
+                                <option value="bartender">Bartender</option>
                             </select>
                             <span id="err_edit_level" class="error invalid-feedback" style="display: hide;"></span>
                         </div>
