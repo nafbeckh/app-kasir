@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
 use App\Models\Penjualan_detail;
+use App\Models\Terlaris;
 use App\Models\Produk;
 use App\Models\Setting;
 use App\Models\User;
@@ -68,9 +69,9 @@ class PenjualanController extends Controller
                 $penjualandt = Penjualan_detail::create([
                     'penjualan_id' => $penjualan->id,
                     'produk_id'    => $p[0],
-                    'harga_jual'   => $p[3],
-                    'jumlah'       => $p[4],
-                    'subtotal'     => $p[5],
+                    'harga_jual'   => $p[1],
+                    'jumlah'       => $p[2],
+                    'subtotal'     => $p[3],
                 ]);
                 // $produk = Produk::find($p[0]);
                 // $produk->stok -= $p[4];
@@ -119,7 +120,7 @@ class PenjualanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request) {
+        if ($request->ajax()) {
             $kasir_id = Auth::id();
             $penjualan = Penjualan::findOrFail($id);
             $penjualan->update([
@@ -134,8 +135,27 @@ class PenjualanController extends Controller
                 'penjualan_aktif'  => 0,
                 'status'           => 'Meja Kosong'
             ]);
+
+            $penjualandt = Penjualan_detail::select('produk_id', 'jumlah')->where(['penjualan_id' => $id])->get();
+            foreach ($penjualandt as $item) {
+                $terlaris = Terlaris::where(['produk_id' => $item->produk_id, 'tanggal' => date('Y-m-d')]);
+                if ($terlaris->count()) {
+                    $getJumlah = $terlaris->get('jumlah');
+                    $jumlah = $getJumlah[0]->jumlah;
+                    $terlaris->update([
+                        'jumlah'  => $item->jumlah + $jumlah,
+                    ]);
+                    
+                } else{
+                    $terlaris = Terlaris::create([
+                        'produk_id' => $item->produk_id,
+                        'jumlah'  => $item->jumlah,
+                        'tanggal' => date('Y-m-d')
+                    ]);
+                }
+            }
                 
-            if ($penjualan && $meja) {
+            if ($terlaris) {
                 return response()->json(['status' => true, 'message' => 'Transaction Success']);
             } else {
                 return response()->json(['status' => false, 'message' => 'Transaction Failed']);

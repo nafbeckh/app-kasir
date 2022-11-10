@@ -326,13 +326,9 @@
             ordering: false,
             columnDefs: [{
                 "className": "text-center",
-                "targets": [0, 2, 3, 4]
+                "targets": [0, 1, 2, 3]
             }],
-            columns: [{
-                render: function(data, type, row) {
-                    return `<span class="badge badge-success">${data}</span>`;
-                },
-            }, {}, {
+            columns: [{}, {
                 render: function(data, type, row) {
                     return harga(data);
                 },

@@ -327,11 +327,6 @@
                     hide: 200
                 },
             });
-            // console.clear();
-            // logout_()
-            // Swal.fire('Any fool can use a computer')
-
-            // setInterval(countNotif, 5000);
 
             Pusher.logToConsole = true;
             var pusher = new Pusher('a2c0df40a01f5334b6a6', {
@@ -344,23 +339,23 @@
             });
         })
 
-        function countNotif(){
-            $.ajax({
-                type: 'GET',
-                url: "{{ route('notifikasi.cekNotif') }}",
-                success: function(data){
-                    $('#counterNotif').html(data);
-                    $('.ntf').html(data + ' Notifikasi');
+        // function countNotif(){
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: "{{ route('notifikasi.cekNotif') }}",
+        //         success: function(data){
+        //             $('#counterNotif').html(data);
+        //             $('.ntf').html(data + ' Notifikasi');
 
-                    if (data == 0) {
-                        $('.ntf').html('Tidak ada Notifikasi');
-                    }
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
-        }
+        //             if (data == 0) {
+        //                 $('.ntf').html('Tidak ada Notifikasi');
+        //             }
+        //         },
+        //         error: function (data) {
+        //             console.log('Error:', data);
+        //         }
+        //     });
+        // }
 
         function fetchNotif(){
             $.ajax({

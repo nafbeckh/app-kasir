@@ -290,18 +290,9 @@
                 "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
             autoWidth: false,
             columnDefs: [
+               
                 {
-                    className: "text-center",
-                    targets: [4],
-                },
-                {
-                    targets: 0,
-                    width: "30px",
-                    className: "text-center",
-                    orderable: !1,
-                },
-                {
-                    targets: [1, 6],
+                    targets: [0, 5],
                     className: "text-center",
                     orderable: !1,
                 },
