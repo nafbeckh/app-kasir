@@ -22,17 +22,16 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            @if (count($penjualan))
-            @foreach($penjualan as $item)
+            @foreach($meja as $item)
             <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-{{$item->status == 'Belum Bayar' ? 'danger' : 'success'}}">
                     <div class="inner">
-                        <h3>{{$item->meja->nama}}</h3>
+                        <h3>{{$item->nama}}</h3>
                         <p>{{$item->status}}</p>
                     </div>
                     @if ($item->status == 'Belum Bayar')
-                    <a href="{{ route('penjualan.pembayaran', $item->id) }}" class="small-box-footer">Transaksi <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('penjualan.pembayaran', $item->penjualan_aktif) }}" class="small-box-footer">Transaksi <i class="fas fa-arrow-circle-right"></i></a>
                     @else
                     <div style="margin-top: 7px"><br></div>
                     @endif
@@ -40,13 +39,6 @@
             </div>
             <!-- ./col -->
             @endforeach
-            @else
-            <div class="col-12">
-                <div class="callout">
-                    <h5>Belum ada transaksi</h5>
-                </div>
-            </div>
-            @endif
         </div>
     </div>
 </section>

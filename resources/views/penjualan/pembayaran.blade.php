@@ -262,9 +262,12 @@
                             },
                             success: function (res) {
                                 if (res.status == true) {
-                                    Swal.fire('Success!', res.message, 'success');
-                                    window.open("{{route('penjualan.print',  $penjualan->id)}}", '_blank');
-                                    window.location.href = "{{route('penjualan.index')}}";
+                                    let url = "{{route('penjualan.print',  $penjualan->id)}}";
+                                    Swal.fire('Success!', res.message, 'success')
+                                        .then(function () {
+                                            window.open(url, '_blank');
+                                            location.reload();
+                                        });
                                 } else {
                                     Swal.fire('Failed!', res.message, 'error')
                                 }
