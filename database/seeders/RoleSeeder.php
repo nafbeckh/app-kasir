@@ -24,5 +24,15 @@ class RoleSeeder extends Seeder
             'name' => 'kasir',
             'guard_name' => 'web'
         ]);
+
+        Role::create([
+            'name' => 'waiters',
+            'guard_name' => 'web'
+        ]);
+
+        Role::create([
+            'name' => 'bartender',
+            'guard_name' => 'web'
+        ]);
     }
 }

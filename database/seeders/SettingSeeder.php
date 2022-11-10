@@ -16,12 +16,12 @@ class SettingSeeder extends Seeder
     public function run()
     {
         //
-        File::copy(public_path('assets/dist/img/logo.png'), public_path('assets/dist/img/logo.png'));
+        // File::copy(public_path('assets/dist/img/logo-20221017153924.png'), public_path('assets/dist/img/logo-20221017153924.png'));
         Setting::create([
-            'nama_toko' => 'KCNPOS',
-            'alamat' => 'Ngetrep Kulonan',
+            'nama_toko' => 'KDA Coffe & Foodcourt',
+            'alamat' => 'Jl. Lintas Negeri Lama',
             'telp' => '082324129752',
-            'path_logo' => 'logo.png'
+            'path_logo' => 'logo-20221017153924.jpg'
         ]);
     }
 }

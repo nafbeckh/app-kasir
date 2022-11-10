@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `notifikasis` (
   CONSTRAINT `notifikasis_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app-kasir.notifikasis: ~1 rows (approximately)
+-- Dumping data for table app-kasir.notifikasis: ~0 rows (approximately)
 DELETE FROM `notifikasis`;
 /*!40000 ALTER TABLE `notifikasis` DISABLE KEYS */;
 /*!40000 ALTER TABLE `notifikasis` ENABLE KEYS */;
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `pengeluarans` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app-kasir.pengeluarans: ~1 rows (approximately)
+-- Dumping data for table app-kasir.pengeluarans: ~0 rows (approximately)
 DELETE FROM `pengeluarans`;
 /*!40000 ALTER TABLE `pengeluarans` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pengeluarans` ENABLE KEYS */;
@@ -290,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `produks` (
   CONSTRAINT `produks_kategori_id_foreign` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app-kasir.produks: ~3 rows (approximately)
+-- Dumping data for table app-kasir.produks: ~4 rows (approximately)
 DELETE FROM `produks`;
 /*!40000 ALTER TABLE `produks` DISABLE KEYS */;
 INSERT INTO `produks` (`id`, `kategori_id`, `nama_prod`, `harga_jual`, `ket`, `created_at`, `updated_at`) VALUES
@@ -311,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app-kasir.roles: ~3 rows (approximately)
+-- Dumping data for table app-kasir.roles: ~4 rows (approximately)
 DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
@@ -368,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `terlaris` (
   CONSTRAINT `terlaris_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app-kasir.terlaris: ~4 rows (approximately)
+-- Dumping data for table app-kasir.terlaris: ~5 rows (approximately)
 DELETE FROM `terlaris`;
 /*!40000 ALTER TABLE `terlaris` DISABLE KEYS */;
 INSERT INTO `terlaris` (`id`, `produk_id`, `jumlah`, `tanggal`, `created_at`, `updated_at`) VALUES
@@ -398,7 +398,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `nama`, `email`, `email_verified_at`, `password`, `foto`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'Admin', 'admin@gmail.com', '2022-10-25 14:19:44', '$2y$10$C1fElaYFe5nRhVgSwdCTtevOO82uFmpGOHS14CcKlIGXy4YmCZH/i', '20221017153856.png', 'eu3W8ZbSnFgvfMLwNaNPZF5XB0r8d8Wqwo4xHXZ6kqBK8ucRzmLezCeWLFEc', '2022-10-25 14:19:47', '2022-10-25 19:22:38'),
+	(1, 'Adm`app-kasir``app-kasir2`in', 'admin@gmail.com', '2022-10-25 14:19:44', '$2y$10$C1fElaYFe5nRhVgSwdCTtevOO82uFmpGOHS14CcKlIGXy4YmCZH/i', '20221017153856.png', 'eu3W8ZbSnFgvfMLwNaNPZF5XB0r8d8Wqwo4xHXZ6kqBK8ucRzmLezCeWLFEc', '2022-10-25 14:19:47', '2022-10-25 19:22:38'),
 	(2, 'Kasir', 'kasir@gmail.com', NULL, '$2y$10$j6rNnmR3YYA9GJod9Nt8eOOS7/DXNIFZmnJcq3rB0Zx8ICVZXnxjW', '20221028142523.jpg', NULL, '2022-10-28 14:25:23', '2022-10-28 14:25:23'),
 	(3, 'Sugeng', 'sugeng@gmail.com', '2022-10-22 00:00:00', '$2y$10$LQpLNTo3Mg2RXzERp4d06.9VHN2XuvXz6FiaVDJ3SAe0yBbWtBWk2', '20221028142523.jpg', 'Y3Yx0tQZLzMlayUqy3HCUuf1IhriBv4zTY6Ic4pVW4lKNB4XfYW9gBMtsyJ5', '2022-10-30 16:46:29', '2022-10-30 16:46:30'),
 	(4, 'Bartender', 'bartender@gmail.com', NULL, '$2y$10$LQpLNTo3Mg2RXzERp4d06.9VHN2XuvXz6FiaVDJ3SAe0yBbWtBWk2', '20221105091756.jpg', NULL, '2022-11-05 09:17:56', '2022-11-05 09:17:56');

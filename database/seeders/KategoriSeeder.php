@@ -22,7 +22,7 @@ class KategoriSeeder extends Seeder
             'nama_kat' => 'Minuman'
         ]);
         Kategori::create([
-            'nama_kat' => 'Snak'
+            'nama_kat' => 'Snack'
         ]);
     }
 }
