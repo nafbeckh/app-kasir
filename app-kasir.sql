@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.failed_jobs: ~0 rows (approximately)
+DELETE FROM `failed_jobs`;
 /*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
 
@@ -44,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `kategoris` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.kategoris: ~3 rows (approximately)
+DELETE FROM `kategoris`;
 /*!40000 ALTER TABLE `kategoris` DISABLE KEYS */;
 INSERT INTO `kategoris` (`id`, `nama_kat`, `created_at`, `updated_at`) VALUES
 	(1, 'Makanan', '2022-10-25 14:22:40', '2022-10-25 14:22:40'),
@@ -63,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `mejas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.mejas: ~3 rows (approximately)
+DELETE FROM `mejas`;
 /*!40000 ALTER TABLE `mejas` DISABLE KEYS */;
 INSERT INTO `mejas` (`id`, `nama`, `penjualan_aktif`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 'Meja 01', 1, 'Belum Bayar', '2022-10-25 14:22:31', '2022-11-05 14:58:55'),
@@ -79,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 ) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.migrations: ~14 rows (approximately)
+DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(57, '2014_10_12_000000_create_users_table', 1),
@@ -108,6 +112,7 @@ CREATE TABLE IF NOT EXISTS `model_has_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.model_has_permissions: ~0 rows (approximately)
+DELETE FROM `model_has_permissions`;
 /*!40000 ALTER TABLE `model_has_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `model_has_permissions` ENABLE KEYS */;
 
@@ -122,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `model_has_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.model_has_roles: ~4 rows (approximately)
+DELETE FROM `model_has_roles`;
 /*!40000 ALTER TABLE `model_has_roles` DISABLE KEYS */;
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 	(1, 'App\\Models\\User', 1),
@@ -145,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `notifikasis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.notifikasis: ~1 rows (approximately)
+DELETE FROM `notifikasis`;
 /*!40000 ALTER TABLE `notifikasis` DISABLE KEYS */;
 /*!40000 ALTER TABLE `notifikasis` ENABLE KEYS */;
 
@@ -157,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.password_resets: ~0 rows (approximately)
+DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
@@ -171,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `pengeluarans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.pengeluarans: ~1 rows (approximately)
+DELETE FROM `pengeluarans`;
 /*!40000 ALTER TABLE `pengeluarans` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pengeluarans` ENABLE KEYS */;
 
@@ -197,6 +206,7 @@ CREATE TABLE IF NOT EXISTS `penjualans` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.penjualans: ~2 rows (approximately)
+DELETE FROM `penjualans`;
 /*!40000 ALTER TABLE `penjualans` DISABLE KEYS */;
 INSERT INTO `penjualans` (`id`, `meja_id`, `waiters_id`, `kasir_id`, `total_item`, `total_harga`, `bayar`, `diterima`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 1, 3, 1, 2, 22000, 0, 0, 'Belum Bayar', '2022-10-30 16:48:08', '2022-11-05 14:58:55'),
@@ -220,6 +230,7 @@ CREATE TABLE IF NOT EXISTS `penjualan_details` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.penjualan_details: ~4 rows (approximately)
+DELETE FROM `penjualan_details`;
 /*!40000 ALTER TABLE `penjualan_details` DISABLE KEYS */;
 INSERT INTO `penjualan_details` (`id`, `penjualan_id`, `produk_id`, `jumlah`, `subtotal`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, 1, 12000, '2022-10-30 16:51:26', NULL),
@@ -240,6 +251,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.permissions: ~0 rows (approximately)
+DELETE FROM `permissions`;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 
@@ -260,6 +272,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.personal_access_tokens: ~0 rows (approximately)
+DELETE FROM `personal_access_tokens`;
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 
@@ -278,6 +291,7 @@ CREATE TABLE IF NOT EXISTS `produks` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.produks: ~3 rows (approximately)
+DELETE FROM `produks`;
 /*!40000 ALTER TABLE `produks` DISABLE KEYS */;
 INSERT INTO `produks` (`id`, `kategori_id`, `nama_prod`, `harga_jual`, `ket`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'Nasi Goreng', 12000, 'dasdasdas', '2022-10-25 15:32:53', '2022-10-25 15:32:53'),
@@ -298,6 +312,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.roles: ~3 rows (approximately)
+DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 	(1, 'admin', 'web', '2022-10-25 14:21:21', '2022-10-25 14:21:22'),
@@ -317,6 +332,7 @@ CREATE TABLE IF NOT EXISTS `role_has_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.role_has_permissions: ~0 rows (approximately)
+DELETE FROM `role_has_permissions`;
 /*!40000 ALTER TABLE `role_has_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `role_has_permissions` ENABLE KEYS */;
 
@@ -333,6 +349,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.settings: ~0 rows (approximately)
+DELETE FROM `settings`;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 INSERT INTO `settings` (`id`, `nama_toko`, `alamat`, `telp`, `path_logo`, `created_at`, `updated_at`) VALUES
 	(1, 'KDA Coffe & Foodcourt', 'Jl. Lintas Negeri Lama', '0821', 'logo-20221017153924.jpg', '2022-10-25 14:20:48', '2022-10-25 14:20:49');
@@ -352,6 +369,7 @@ CREATE TABLE IF NOT EXISTS `terlaris` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.terlaris: ~4 rows (approximately)
+DELETE FROM `terlaris`;
 /*!40000 ALTER TABLE `terlaris` DISABLE KEYS */;
 INSERT INTO `terlaris` (`id`, `produk_id`, `jumlah`, `tanggal`, `created_at`, `updated_at`) VALUES
 	(1, 1, 4, '2022-10-31', '2022-10-31 19:23:03', NULL),
@@ -377,6 +395,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table app-kasir.users: ~4 rows (approximately)
+DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `nama`, `email`, `email_verified_at`, `password`, `foto`, `remember_token`, `created_at`, `updated_at`) VALUES
 	(1, 'Admin', 'admin@gmail.com', '2022-10-25 14:19:44', '$2y$10$C1fElaYFe5nRhVgSwdCTtevOO82uFmpGOHS14CcKlIGXy4YmCZH/i', '20221017153856.png', 'eu3W8ZbSnFgvfMLwNaNPZF5XB0r8d8Wqwo4xHXZ6kqBK8ucRzmLezCeWLFEc', '2022-10-25 14:19:47', '2022-10-25 19:22:38'),
