@@ -72,7 +72,6 @@ class ProdukController extends Controller
         $kode = 'P' . tambah_nol_didepan((int)$produk->id + 1, 6);
         $produk = Produk::create([
             'nama_prod'     => $request->nama,
-            'kode_prod'     => $kode,
             'harga_jual'    => $request->harga_jual,
             'ket'           => $request->keterangan,
             'kategori_id'   => $request->kategori,
