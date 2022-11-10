@@ -46,11 +46,9 @@
                 <li class="nav-item dropdown" onclick="fetchNotif()">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                       <i class="far fa-bell"></i>
-                      <span class="badge badge-warning navbar-badge" id="counterNotif"></span>
+                      <span class="badge badge-warning navbar-badge" data-count="" id="counterNotif"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="fetchNotf">
-                      <span class="dropdown-item dropdown-header ntf">1 Notifikasi</span>
-                      <div class="dropdown-divider"></div>
                       <div id="fetchNotif">
                         
                       </div>
@@ -330,32 +328,34 @@
 
             Pusher.logToConsole = true;
             var pusher = new Pusher('a2c0df40a01f5334b6a6', {
-            cluster: 'ap1'
+                cluster: 'ap1'
+            });
+            
+            var channel = pusher.subscribe('notification');
+            channel.bind('NotificationEvent', function(data) {
+                // console.log(JSON.stringify(data));
+                for (let i = 0; i < data.length; i++){
+                    if (data[i].for == {{$user->id}}) {
+                        $('#counterNotif').html(data[i].count);
+                    }
+                }
             });
 
-            var channel = pusher.subscribe('kasir');
-            channel.bind('test', function(data) {
-                $('#counterNotif').html(data);
-            });
+            countNotif()
         })
 
-        // function countNotif(){
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: "{{ route('notifikasi.cekNotif') }}",
-        //         success: function(data){
-        //             $('#counterNotif').html(data);
-        //             $('.ntf').html(data + ' Notifikasi');
-
-        //             if (data == 0) {
-        //                 $('.ntf').html('Tidak ada Notifikasi');
-        //             }
-        //         },
-        //         error: function (data) {
-        //             console.log('Error:', data);
-        //         }
-        //     });
-        // }
+        function countNotif(){
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('notifikasi.cekNotif') }}",
+                success: function(data){
+                    $('#counterNotif').html(data);
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        }
 
         function fetchNotif(){
             $.ajax({

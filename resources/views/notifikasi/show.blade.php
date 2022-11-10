@@ -26,8 +26,8 @@
         <div class="card">
 
             <div class="card-body">
-                <h3><b>{{$notif->pesan}}</b></h3><hr>
-                <h4><table>{!!$notif->pesan_detail!!}</table></h4>
+                <h4><b>{{$notif->pesan}}</b></h4><hr>
+                <h5><table>{!!$notif->pesan_detail!!}</table></h5>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

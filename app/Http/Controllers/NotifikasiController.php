@@ -151,18 +151,20 @@ class NotifikasiController extends Controller
 
     public function fetchNotif(Request $request)
     {
-        
         $user = Auth::user();
         if ($request->ajax()) {
             $notif = Notifikasi::where(['user_id' => $user->id])->orderByDesc('created_at')->limit(3)->get();
+            $data = '';
             foreach ($notif as $item) {
-            $test = ($item->status) ? 'background:#edeff1': '';
-                echo '<a href="'.route('notifikasi.show', $item->id).'" class="dropdown-item" style="'.$test.'">
-                <i class="fas fa-shopping-cart mr-2"></i> '.$item->pesan.'
-                <span class="float-right text-muted text-sm">'.timeAgo($item->created_at).'</span>
-            </a>
-            <div class="dropdown-divider"></div>';
+                $color = ($item->status) ? 'background:#edeff1': '';
+                $data .= '<a href="'.route('notifikasi.show', $item->id).'" class="dropdown-item" style="'.$color.'">
+                    <i class="fas fa-shopping-cart mr-2"></i> '.$item->pesan.'
+                    <span class="float-right text-muted text-sm">'.timeAgo($item->created_at).'</span>
+                </a>
+                <div class="dropdown-divider"></div>';
             }
+
+            return $data;
         }
     }
 }

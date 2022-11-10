@@ -361,7 +361,6 @@
         $('.show-cart').html(output);
         $('#total-cart').html('Total: Rp ' + hrg(shoppingCart.totalCart()));
         $('.total-count').html(shoppingCart.totalCount());
-        console.log(cartArray);
     }
 
     // Delete item button

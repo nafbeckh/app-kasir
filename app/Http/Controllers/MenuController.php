@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Penjualan;
 use App\Models\Penjualan_detail;
 use App\Models\Produk;
+use App\Models\Notifikasi;
+use App\Events\NotificationEvent;
 use App\Models\Meja;
 use App\Models\Setting;
 use App\Models\User;
+use Pusher\Pusher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -89,10 +92,10 @@ class MenuController extends Controller
 
         if ($penjualan) {
             $meja = Meja::where(['id' => $penjualan->meja_id]);
-            $meja->update([
-                'penjualan_aktif'  => $penjualan->id,
-                'status'           => 'Belum Bayar'
-            ]);
+            // $meja->update([
+            //     'penjualan_aktif'  => $penjualan->id,
+            //     'status'           => 'Belum Bayar'
+            // ]);
 
             foreach ($request->input('produk') as $p) {
                 $penjualandt = Penjualan_detail::create([
@@ -102,10 +105,39 @@ class MenuController extends Controller
                     'subtotal'     => $p['price'] * $p['count'],
                 ]);
             }
+
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                ['cluster' => 'ap1', 'useTLS' => true],
+            );
+            
+            $nama_meja = $meja->get('nama');
+            $user = User::where(['is_login' => 1])->get();
+            $data = [];
+            foreach ($user as $item) {
+                $notif = Notifikasi::create([
+                    'user_id'       => $item->id,
+                    'penjualan_id'  => $penjualan->id,
+                    'pesan'         => 'Pesanan dari ' .$nama_meja[0]->nama,
+                ]);
+
+                $data[] = ['count' => ($this->countNotif($item->id) - 1) + 1, 'for' => $item->id];
+            }
+
+            $pusher->trigger('notification', 'NotificationEvent', $data);
+            
             return response()->json(['status' => true, 'message' => 'Pemesanan Menu Berhasil']);
         } else {
             return response()->json(['status' => false, 'message' => 'Pemesanan Menu Gagal!']);
         }
+    }
+
+    private function countNotif($id)
+    {
+        $notif = Notifikasi::where(['user_id' => 1, 'status' => '0'])->count();
+        return $notif ? $notif : '0';
     }
 
     /**
