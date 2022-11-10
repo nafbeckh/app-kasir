@@ -205,8 +205,7 @@
             },
             success: function (res) {
                 if (res.status == true) {
-                    Swal
-                        .fire('Read!', res.message, 'success')
+                    Swal.fire('Read!', res.message, 'success')
                         .then(function () {
                             location.reload();
                         });
