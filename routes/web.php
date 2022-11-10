@@ -11,6 +11,7 @@ use App\Http\Controllers\{
     SettingController,
     UserController,
     NotifikasiController,
+    MenuController,
 };
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -81,7 +82,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/penjualan/pembayaran/{id}', [PenjualanController::class, 'pembayaran'])->name('penjualan.pembayaran');
         Route::resource('penjualan', PenjualanController::class)->only('index', 'edit', 'update');
     });
-    Route::group(['middleware' => ['role:admin|kasir|bartender']], function () {
+
+    Route::group(['middleware' => ['role:admin|kasir|waiters|bartender']], function () {
         Route::get('/profile', [SettingController::class, 'profile'])->name('setting.profile');
         Route::post('/profile', [SettingController::class, 'profileUpdate'])->name('setting.profileUpdate');
 
@@ -94,6 +96,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('notifikasi/destroyBatch', [NotifikasiController::class, 'destroyBatch'])->name('notifikasi.destroy.batch');
         Route::post('notifikasi/readBatch', [NotifikasiController::class, 'readBatch'])->name('notifikasi.read.batch');
         Route::resource('notifikasi', NotifikasiController::class)->except('create', 'show');
+    });
+
+    Route::group(['middleware' => ['role:waiters']], function () {
+        Route::resource('menu', MenuController::class)->except('create', 'show');
     });
 });
 

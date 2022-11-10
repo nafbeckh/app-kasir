@@ -16,6 +16,7 @@ class CreateMejasTable extends Migration
         Schema::create('mejas', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->unsignedBigInteger('penjualan_aktif');
             $table->enum('status', ['Meja Kosong', 'Belum Bayar'])->default('Meja Kosong');
             $table->timestamps();
         });

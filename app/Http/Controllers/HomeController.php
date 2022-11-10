@@ -41,7 +41,9 @@ class HomeController extends Controller
         } else if ($user->hasRole('kasir')) {
             return redirect()->route('penjualan.transaksi');
             // return view('dashboard.kasir', compact(['user', 'toko']))->with('title', 'Dashboard');
-        } else {
+        } else if ($user->hasRole('waiters')) {
+            return redirect()->route('menu.index');
+        } else if ($user->hasRole('bartender')) {
             return redirect()->route('notifikasi.index');
         }
     }

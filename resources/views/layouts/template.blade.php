@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- pace-progress -->
@@ -37,6 +35,14 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                @hasrole('waiters')
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#modalCart">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span class="badge badge-primary navbar-badge total-count"></span>
+                    </a>
+                </li>
+                @endhasrole
                 <li class="nav-item dropdown" onclick="fetchNotif()">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                       <i class="far fa-bell"></i>
@@ -50,7 +56,7 @@
                       </div>
                       <a href="{{route('notifikasi.index')}}" class="dropdown-item dropdown-footer">Lihat Semua Notifikasi</a>
                     </div>
-                  </li>
+                </li>
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ asset('assets/dist/img/') }}/{{ $user->foto }}" class="user-image img-circle elevation-2" alt="User Image">
@@ -62,7 +68,7 @@
 
                             <p>
                                 {{ $user->nama }} - {{ $user->email }}
-                                <small>Member since {{ date('M Y', $user->create_at) }}</small>
+                                <small>Member since {{ date('M Y', strtotime($user->created_at)) }}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
@@ -198,6 +204,16 @@
                                 <i class="nav-icon fas fa-money-bill"></i>
                                 <p>
                                     Transaksi
+                                </p>
+                            </a>
+                        </li>
+                        @endhasrole
+                        @hasrole('waiters')
+                        <li class="nav-item">
+                            <a href="{{ route('menu.index') }}" class="nav-link {{ $title == 'Pemesanan Menu' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-receipt"></i>
+                                <p>
+                                    Pemesanan Menu
                                 </p>
                             </a>
                         </li>

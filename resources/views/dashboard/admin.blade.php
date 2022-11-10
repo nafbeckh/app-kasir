@@ -103,7 +103,7 @@
             <!-- ./col -->
         </div>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col">
                 <div class="card card-outline card-success">
                     <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-chart-area mr-1"></i>Grafik Laporan</h3>
@@ -137,40 +137,6 @@
                     <!-- /.card-body -->
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="card card-outline card-info">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-exclamation-triangle mr-1"></i>Produk Stok Limit</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table id="stokLimit" class="table table-striped table-valign-middle table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Produk</th>
-                                    <th>Harga Jual</th>
-                                    <th>Stok</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer text-center">
-                        <a href="{{ route('produk.index') }}" class="uppercase">Lihat Semua Produk</a>
-                    </div>
-                    <!-- /.card-footer -->
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -192,7 +158,6 @@
     $(function() {
         var label = []
         var datapenj = []
-        var datapemb = []
         var datapeng = []
 
         $('#tanggal').daterangepicker({
@@ -206,7 +171,6 @@
         }).on('change', function() {
             label = []
             datapenj = []
-            datapemb = []
             datapeng = []
 
             let start = $(this).data('daterangepicker').startDate.format('YYYY-MM-DD')
@@ -217,14 +181,12 @@
                     for (let i = 0; i < res.data.length; i++) {
                         label.push(moment(res.data[i].tanggal).format('DD'))
                         datapenj.push(res.data[i].penjualan)
-                        datapemb.push(res.data[i].pembelian)
                         datapeng.push(res.data[i].pengeluaran)
                     }
 
                     barChartData.labels = label
                     barChartData.datasets[0].data = datapenj
-                    barChartData.datasets[1].data = datapemb
-                    barChartData.datasets[2].data = datapeng
+                    barChartData.datasets[1].data = datapeng
                     chart.update()
                 } else {
                     Swal.fire(
@@ -252,16 +214,6 @@
                     data: datapenj
                 },
                 {
-                    label: 'Pembelian',
-                    backgroundColor: 'rgba(210, 214, 222, 1)',
-                    borderColor: 'rgba(210, 214, 222, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(210, 214, 222, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: datapemb
-                }, {
                     label: 'Pengeluaran',
                     backgroundColor: 'rgba(21, 214, 222, 1)',
                     borderColor: 'rgba(21, 214, 222, 1)',
@@ -288,24 +240,6 @@
             data: barChartData,
             options: barChartOptions
         })
-
-        $.get("{{ route('produk.stok.limit') }}").done(function(res) {
-            for (let i = 0; i < res.data.length; i++) {
-                $('#stokLimit > tbody:last-child').append(`<tr>
-                                    <td>
-                                        ${res.data[i].nama_prod}
-                                    </td>
-                                    <td>${harga(res.data[i].harga_jual)}</td>
-                                    <td>
-                                        <span class="badge ${res.data[i].stok == 0 ? 'bg-danger' : 'bg-warning'}">${res.data[i].stok}</span>
-                                    </td>
-                                </tr>`);
-            }
-        }).fail(function() {
-            $('#stokLimit > tbody:last-child').append('<tr>Failed Get Data</tr>');
-        })
-
-
     })
 </script>
 @endpush

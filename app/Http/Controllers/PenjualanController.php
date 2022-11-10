@@ -128,8 +128,14 @@ class PenjualanController extends Controller
                 'diterima'         => $request->diterima,
                 'status'           => 'Sudah Bayar'
             ]);
+
+            $meja = Meja::where(['id' => $penjualan->meja_id, 'penjualan_aktif' => $id]);
+            $meja->update([
+                'penjualan_aktif'  => 0,
+                'status'           => 'Meja Kosong'
+            ]);
                 
-            if ($penjualan) {
+            if ($penjualan && $meja) {
                 return response()->json(['status' => true, 'message' => 'Transaction Success']);
             } else {
                 return response()->json(['status' => false, 'message' => 'Transaction Failed']);
@@ -204,18 +210,20 @@ class PenjualanController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $toko = Setting::first();
-        $penjualan = Penjualan::where('status', '=', 'Belum Bayar')->with('meja')->orderByDesc('created_at')->get();
-        return view('penjualan.transaksi', compact(['user', 'toko', 'penjualan']))->with('title', 'Transaksi');
+        $meja = Meja::orderByRaw('nama')->get();
+        return view('penjualan.transaksi', compact(['user', 'toko', 'meja']))->with('title', 'Transaksi');
     }
 
     public function pembayaran(Request $request, $id)
     {
-        $penjualan = Penjualan::where('status', '=', 'Belum Bayar')->with('meja')->findOrFail($id);
+        $penjualan = Penjualan::where('status', '=', 'Belum Bayar')->with('meja')->find($id);
         if ($request->ajax()) {
             return DataTables::of(Penjualan_detail::select('produks.nama_prod', 'produks.harga_jual', 'jumlah', 'subtotal')
             ->join('produks', 'produks.id', '=', 'penjualan_details.produk_id')
             ->where('penjualan_details.penjualan_id', $id)->get())->toJson();
         }
+
+        if(!$penjualan) return redirect()->route('penjualan.transaksi');
 
         $id = Auth::id();
         $user = User::find($id);
