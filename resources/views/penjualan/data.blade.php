@@ -87,7 +87,6 @@
                     <table id="tbDetail" class="table table-sm table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
                                 <th>Jumlah</th>
@@ -410,7 +409,6 @@
                 success: function(res) {
                     for (i = 0; i < res.data.penjualan_detail.length; i++) {
                         tbdetail.row.add([
-                            res.data.penjualan_detail[i].produk.kode_prod,
                             res.data.penjualan_detail[i].produk.nama_prod,
                             res.data.penjualan_detail[i].produk.harga_jual,
                             res.data.penjualan_detail[i].jumlah,

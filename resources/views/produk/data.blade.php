@@ -54,7 +54,6 @@
                         <thead>
                             <tr>
                                 <th class="text-center checkbox-column dt-no-sorting"><input type="checkbox" class="text-center new-control-input chk-parent select-customers-info" data-toggle="tooltip" title="Select All Data"></th>
-                                <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Kategori</th>
                                 <th>Harga Jual</th>
@@ -314,13 +313,6 @@
                     data: 'id',
                     render: function(data, type, row, meta) {
                         return `<input type="checkbox" name="id[]" value="${data}" class="new-control-input child-chk select-customers-info">`
-                    }
-                },
-                {
-                    data: 'kode_prod',
-                    title: "Kode",
-                    render: function(data, type, row, meta) {
-                        return `<span class="badge badge-success">${data}</span>`
                     }
                 },
                 {

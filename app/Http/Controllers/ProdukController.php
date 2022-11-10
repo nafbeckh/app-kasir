@@ -69,7 +69,6 @@ class ProdukController extends Controller
             'kategori'      => 'required',
         ]);
         $produk = Produk::latest()->first() ?? new Produk();
-        $kode = 'P' . tambah_nol_didepan((int)$produk->id + 1, 6);
         $produk = Produk::create([
             'nama_prod'     => $request->nama,
             'harga_jual'    => $request->harga_jual,

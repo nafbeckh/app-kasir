@@ -93,19 +93,6 @@
                         <!-- ########################## -->
 
                     </div>
-                    {{-- <div class="text-center">
-                        <b>THANK YOU</b>
-                    </div>
-                    <div class="text-center">
-                        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($penjualan->kode_penj, 'C93') }}" alt="{{ $penjualan->kode_penj }}" width="90%">
-                    </div>
-                    <div class="text-center mb-3">
-                        <b>{{ $penjualan->kode_penj }}</b>
-                        <br>
-                        <br>--
-
-                    </div>
-                    <div class="mb-3"></div> --}}
                 </div>
             </div>
         </section>
