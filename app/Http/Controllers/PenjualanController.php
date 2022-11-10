@@ -155,7 +155,7 @@ class PenjualanController extends Controller
                 }
             }
                 
-            if ($terlaris) {
+            if ($penjualan && $meja && $terlaris) {
                 return response()->json(['status' => true, 'message' => 'Transaction Success']);
             } else {
                 return response()->json(['status' => false, 'message' => 'Transaction Failed']);
