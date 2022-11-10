@@ -92,10 +92,10 @@ class MenuController extends Controller
 
         if ($penjualan) {
             $meja = Meja::where(['id' => $penjualan->meja_id]);
-            // $meja->update([
-            //     'penjualan_aktif'  => $penjualan->id,
-            //     'status'           => 'Belum Bayar'
-            // ]);
+            $meja->update([
+                'penjualan_aktif'  => $penjualan->id,
+                'status'           => 'Belum Bayar'
+            ]);
 
             foreach ($request->input('produk') as $p) {
                 $penjualandt = Penjualan_detail::create([
