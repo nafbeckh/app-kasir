@@ -114,7 +114,12 @@ class MenuController extends Controller
             );
             
             $nama_meja = $meja->get('nama');
-            $user = User::where(['is_login' => 1])->get();
+            $user = User::where(['is_login' => 1])
+                ->whereHas(
+                    'roles', function($q){
+                        $q->where('name', '!=', 'waiters');
+                    }
+                )->get();
             $data = [];
             foreach ($user as $item) {
                 $notif = Notifikasi::create([

@@ -27,7 +27,15 @@
 
             <div class="card-body">
                 <h4><b>{{$notif->pesan}}</b></h4><hr>
-                <h5><table>{!!$notif->pesan_detail!!}</table></h5>
+                <h5><table>
+                    @foreach ($penjualan_detail as $item)
+                    <tr>
+                        <td>{{$item->produk->nama_prod}}</td>
+                        <td width="220px"></td>
+                        <td>{{$item->jumlah}}x</td>
+                    </tr>
+                    @endforeach
+                </table></h5>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

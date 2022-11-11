@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penjualan_detail;
 use App\Models\User;
 use App\Models\Setting;
 use App\Models\Notifikasi;
@@ -65,8 +66,14 @@ class NotifikasiController extends Controller
             'user_id' => $user->id
         ])->firstOrFail();
 
+        $updateNotif = Notifikasi::where([
+            'id' => $notif->id,
+        ])->update(['status' => 1]);
+
+        $penjualan_detail = Penjualan_detail::with('produk')->where(['penjualan_id' => $notif->penjualan_id])->get();
+
         if ($notif) {
-            return view('notifikasi.show', compact(['user', 'toko', 'notif']))->with('title', 'Detail Notifikasi');
+            return view('notifikasi.show', compact(['user', 'toko', 'notif', 'penjualan_detail']))->with('title', 'Detail Notifikasi');
         } else {
             abort(404);
         }
