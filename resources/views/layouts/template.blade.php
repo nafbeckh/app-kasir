@@ -264,6 +264,8 @@
         </div>
         <!-- /.content-wrapper -->
 
+        <audio id="audioNotif" hidden src="{{ asset('assets/dist/audio/notification.mp3') }}"></audio>
+
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 1.0.0
@@ -330,12 +332,15 @@
             var pusher = new Pusher('a2c0df40a01f5334b6a6', {
                 cluster: 'ap1'
             });
+
+            var audio = new Audio($('#audioNotif').attr('src'));
             
             var channel = pusher.subscribe('notification');
             channel.bind('NotificationEvent', function(data) {
                 // console.log(JSON.stringify(data));
                 for (let i = 0; i < data.length; i++){
                     if (data[i].for == {{$user->id}}) {
+                        audio.play();
                         $('#counterNotif').html(data[i].count);
                     }
                 }
