@@ -10,7 +10,6 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
     <style>
@@ -30,8 +29,8 @@
                 <div class="col-12">
                     <img src="{{ asset('assets/dist/img') }}/{{ $toko->path_logo }}" alt="Logo" class="brand-image" style="width: 50%;">
                     <br><b><span style="font-size: x-large;">{{ $toko->nama_toko }}</span></b>
-                    <br><span style="font-size: large;">{{ $toko->alamat }}</span>
-                    <br><span style="font-size: large;">{{ $toko->telp }}</span>
+                    <br><span>{{ $toko->alamat }}</span>
+                    <br><span>{{ $toko->telp }}</span>
                     <br>Tgl Pemb: {{ date('d-M-Y H:i:s', strtotime($penjualan->created_at)) }}
                     <br>
                 </div>
@@ -97,11 +96,10 @@
             </div>
         </section>
     </div>
-    <p style="page-break-before: always">
 
 </body>
 <script>
-    window.addEventListener("load", window.print());
+    // window.print()
 </script>
 
 </html>

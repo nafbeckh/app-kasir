@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('foto');
             $table->rememberToken();
-            $table->enum('is_login', [1, 0])->default(0);
             $table->timestamps();
         });
     }
