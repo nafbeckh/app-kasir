@@ -81,62 +81,71 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $penjualan = Penjualan::latest()->first() ?? new Penjualan();
-        $penjualan = Penjualan::create([
-            'kasir_id'      => 1,
-            'meja_id'       => $request->input('meja_id'),
-            'waiters_id'    => Auth::id(),
-            'total_item'    => $request->input('total_item'),
-            'total_harga'   => $request->input('total_harga'),
-        ]);
-
-        if ($penjualan) {
-            $meja = Meja::where(['id' => $penjualan->meja_id]);
-            $meja->update([
-                'penjualan_aktif'  => $penjualan->id,
-                'status'           => 'Belum Bayar'
+        if ($request->input('meja_id') == '') {
+            $this->validate($request, [
+                'meja_id'      => 'required',
             ]);
 
-            foreach ($request->input('produk') as $p) {
-                $penjualandt = Penjualan_detail::create([
-                    'penjualan_id' => $penjualan->id,
-                    'produk_id'    => $p['id'],
-                    'jumlah'       => $p['count'],
-                    'subtotal'     => $p['price'] * $p['count'],
+            return response()->json(['status' => false, 'message' => 'Pilih Meja Terlebih Dahulu!']);
+        } else{
+            $penjualan = Penjualan::latest()->first() ?? new Penjualan();
+            $penjualan = Penjualan::create([
+                'kasir_id'      => 1,
+                'meja_id'       => $request->input('meja_id'),
+                'waiters_id'    => Auth::id(),
+                'total_item'    => $request->input('total_item'),
+                'total_harga'   => $request->input('total_harga'),
+            ]);
+    
+            if ($penjualan) {
+                $meja = Meja::where(['id' => $penjualan->meja_id]);
+                $meja->update([
+                    'penjualan_aktif'  => $penjualan->id,
+                    'status'           => 'Belum Bayar'
                 ]);
+    
+                foreach ($request->input('produk') as $p) {
+                    $penjualandt = Penjualan_detail::create([
+                        'penjualan_id' => $penjualan->id,
+                        'produk_id'    => $p['id'],
+                        'jumlah'       => $p['count'],
+                        'subtotal'     => $p['price'] * $p['count'],
+                    ]);
+                }
+    
+                $pusher = new Pusher(
+                    env('PUSHER_APP_KEY'),
+                    env('PUSHER_APP_SECRET'),
+                    env('PUSHER_APP_ID'),
+                    ['cluster' => 'ap1', 'useTLS' => true],
+                );
+                
+                $nama_meja = $meja->get('nama');
+                $user = User::where(['is_login' => 1])
+                    ->whereHas(
+                        'roles', function($q){
+                            $q->where('name', '!=', 'waiters');
+                        }
+                    )->get();
+                $data = [];
+                foreach ($user as $item) {
+                    $notif = Notifikasi::create([
+                        'user_id'       => $item->id,
+                        'penjualan_id'  => $penjualan->id,
+                        'pesan'         => 'Pesanan dari ' .$nama_meja[0]->nama,
+                    ]);
+    
+                    $data[] = ['count' => ($this->countNotif($item->id) - 1) + 1, 'for' => $item->id];
+                }
+    
+                $pusher->trigger('notification', 'NotificationEvent', $data);
+                
+                return response()->json(['status' => true, 'message' => 'Pemesanan Menu Berhasil']);
+            } else {
+                return response()->json(['status' => false, 'message' => 'Pemesanan Menu Gagal!']);
             }
-
-            $pusher = new Pusher(
-                env('PUSHER_APP_KEY'),
-                env('PUSHER_APP_SECRET'),
-                env('PUSHER_APP_ID'),
-                ['cluster' => 'ap1', 'useTLS' => true],
-            );
-            
-            $nama_meja = $meja->get('nama');
-            $user = User::where(['is_login' => 1])
-                ->whereHas(
-                    'roles', function($q){
-                        $q->where('name', '!=', 'waiters');
-                    }
-                )->get();
-            $data = [];
-            foreach ($user as $item) {
-                $notif = Notifikasi::create([
-                    'user_id'       => $item->id,
-                    'penjualan_id'  => $penjualan->id,
-                    'pesan'         => 'Pesanan dari ' .$nama_meja[0]->nama,
-                ]);
-
-                $data[] = ['count' => ($this->countNotif($item->id) - 1) + 1, 'for' => $item->id];
-            }
-
-            $pusher->trigger('notification', 'NotificationEvent', $data);
-            
-            return response()->json(['status' => true, 'message' => 'Pemesanan Menu Berhasil']);
-        } else {
-            return response()->json(['status' => false, 'message' => 'Pemesanan Menu Gagal!']);
         }
+        
     }
 
     private function countNotif($id)
