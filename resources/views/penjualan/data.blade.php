@@ -430,25 +430,12 @@
             id = $(this).data("id");
             let url = "{{ route('penjualan.print', ':id') }}";
             url = url.replace(':id', id);
-            var doc = window.open(url + "?area=Small")
+            // var doc = window.open(url + "?area=Small");
 
-            // Swal.fire({
-            //     title: 'Pilih Ukuran Invoice?',
-            //     showDenyButton: true,
-            //     showCancelButton: true,
-            //     confirmButtonText: '<i class="fas fa-print mr-1">Full</i>',
-            //     denyButtonText: `<i class="fas fa-print mr-1">Small</i>`,
-            // }).then((result) => {
-            //     if (result.isConfirmed) {
-            //         let url = "{{ route('penjualan.print', ':id') }}";
-            //         url = url.replace(':id', id);
-            //         var doc = window.open(url + "?area=full")
-            //     } else if (result.isDenied) {
-            //         let url = "{{ route('penjualan.print', ':id') }}";
-            //         url = url.replace(':id', id);
-            //         var doc = window.open(url + "?area=small")
-            //     }
-            // })
+            $("<iframe id='printabel'>")    
+            .hide()                     
+            .attr("src", url) 
+            .appendTo("body");
 
         });
 
