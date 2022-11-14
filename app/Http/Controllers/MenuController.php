@@ -35,7 +35,7 @@ class MenuController extends Controller
             $produk = Produk::where('nama_prod', 'LIKE', '%'.$request->search.'%')->get();
 
             if ($request->kategori != '') {
-                $produk = Produk::join('kategoris', 'produks.kategori_id', '=', 'kategoris.id')
+                $produk = Produk::select('produks.*', 'kategoris.nama_kat')->join('kategoris', 'produks.kategori_id', '=', 'kategoris.id')
                 ->where('nama_kat', '=', ''.$request->kategori.'')
                 ->where('nama_prod', 'LIKE', '%'.$request->search.'%')
                 ->get();
