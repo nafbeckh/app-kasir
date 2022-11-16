@@ -215,6 +215,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('menu.pesanan') }}" class="nav-link {{ $title == 'Pesanan Aktif' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <p>
+                                    Pesanan Aktif
+                                </p>
+                            </a>
+                        </li>
                         @endhasrole
                         @hasrole('bartender')
                         <li class="nav-item">
