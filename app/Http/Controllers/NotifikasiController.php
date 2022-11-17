@@ -72,7 +72,7 @@ class NotifikasiController extends Controller
 
         $penjualan_detail = Penjualan_detail::with('produk')
                             ->where(['penjualan_id' => $notif->penjualan_id,
-                                     'is_tambah'    => $notif->is_new])->get();
+                                     'is_tambah'    => $notif->is_new ? '0' : '1'])->get();
 
         if ($notif) {
             return view('notifikasi.show', compact(['user', 'toko', 'notif', 'penjualan_detail']))->with('title', 'Detail Notifikasi');
