@@ -31,7 +31,7 @@
                     @foreach ($penjualan_detail as $item)
                     <tr>
                         <td>{{$item->produk->nama_prod}}</td>
-                        <td width="220px"></td>
+                        <td width="200px"></td>
                         <td>{{$item->jumlah}}x</td>
                     </tr>
                     @endforeach

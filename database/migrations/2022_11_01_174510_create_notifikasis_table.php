@@ -19,6 +19,7 @@ class CreateNotifikasisTable extends Migration
             $table->unsignedBigInteger('penjualan_id');
             $table->string('pesan');
             $table->enum('status', [1, 0])->default(0);
+            $table->enum('is_new', [1, 0])->default(1);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('penjualan_id')->references('id')->on('penjualans')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

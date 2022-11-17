@@ -9,7 +9,7 @@ class Notifikasi extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id', 'penjualan_id', 'pesan', 'status'
+        'user_id', 'penjualan_id', 'pesan', 'status', 'is_new'
     ];
 
     public function user()

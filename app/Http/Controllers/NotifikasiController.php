@@ -70,7 +70,9 @@ class NotifikasiController extends Controller
             'id' => $notif->id,
         ])->update(['status' => 1]);
 
-        $penjualan_detail = Penjualan_detail::with('produk')->where(['penjualan_id' => $notif->penjualan_id])->get();
+        $penjualan_detail = Penjualan_detail::with('produk')
+                            ->where(['penjualan_id' => $notif->penjualan_id,
+                                     'is_tambah'    => $notif->is_new])->get();
 
         if ($notif) {
             return view('notifikasi.show', compact(['user', 'toko', 'notif', 'penjualan_detail']))->with('title', 'Detail Notifikasi');

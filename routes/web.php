@@ -101,7 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['role:waiters']], function () {
         Route::get('menu/pesanan', [MenuController::class, 'pesanan'])->name('menu.pesanan');
         Route::post('menu/tambahPesanan', [MenuController::class, 'tambahPesanan'])->name('menu.tambahPesanan');
-        Route::get('/menu/tambahan/{id}', [MenuController::class, 'tambahan'])->name('menu.tambahan');
+        Route::get('menu/tambahan/{id}', [MenuController::class, 'tambahan'])->name('menu.tambahan');
         Route::resource('menu', MenuController::class)->except('create', 'show');
     });
 });

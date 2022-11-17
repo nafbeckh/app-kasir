@@ -95,7 +95,7 @@
                         <img src="{{ asset('assets/dist/img/') }}/{{ $user->foto }}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="javascript:void(0);" class="d-block">{{ $user->nama }} <span class="badge @hasrole('admin') badge-success @else badge-danger @endhasrole">@hasrole('admin') admin @else kasir @endhasrole</span></a>
+                        <a href="javascript:void(0);" class="d-block">{{ $user->nama }} <span class="badge @hasrole('admin') badge-success @else badge-danger @endhasrole">@hasrole('admin') admin @elseif('kasir') kasir @elseif('waiters') waiters @elseif('bartender') bartender @endhasrole</span></a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -272,7 +272,8 @@
         </div>
         <!-- /.content-wrapper -->
 
-        <audio id="audioNotif" hidden src="{{ asset('assets/dist/audio/notification.mp3') }}"></audio>
+        <audio id="newNotif" hidden src="{{ asset('assets/dist/audio/notification.mp3') }}"></audio>
+        <audio id="plusNotif" hidden src="{{ asset('assets/dist/audio/notification-plus.mp3') }}"></audio>
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
@@ -341,14 +342,15 @@
                 cluster: 'ap1'
             });
 
-            var audio = new Audio($('#audioNotif').attr('src'));
+            var newNtf = new Audio($('#newNotif').attr('src'));
+            var plusNtf = new Audio($('#plusNotif').attr('src'));
             
             var channel = pusher.subscribe('notification');
             channel.bind('NotificationEvent', function(data) {
                 // console.log(JSON.stringify(data));
                 for (let i = 0; i < data.length; i++){
                     if (data[i].for == {{$user->id}}) {
-                        audio.play();
+                        (data[i].is_new == '0') ? plusNtf.play() : newNtf.play();
                         $('#counterNotif').html(data[i].count);
                     }
                 }

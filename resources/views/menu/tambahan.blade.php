@@ -85,26 +85,6 @@
         return a.toLocaleString('id-ID')
     }
 
-    // function pesanan() {
-    //     var executed = false;
-    //     var dataPesanan = JSON.parse('!!$pesanan!!');
-    //     // console.log(dataPesanan);
-    //     var arrayLength = dataPesanan.length;
-    //     for (var i = 0; i < arrayLength; i++) {
-    //         var id = dataPesanan[i]['produk_id'];
-    //         var name = dataPesanan[i]['nama_prod'];
-    //         var price = dataPesanan[i]['harga_jual'];
-    //         shoppingCart.addItemToCart(id, name, price, 1);
-    //         displayCart();
-    //     }
-        
-    //     return function() {
-    //         if (!executed) {
-    //             executed = true;
-    //         }
-    //     };
-    // }
-
     $(document).ready(function() {
         $.ajax({
             url: "{{ route('menu.tambahan', $id) }}",
